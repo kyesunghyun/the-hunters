@@ -425,9 +425,6 @@
                 <label>학교 / 학년(학번) / 학과</label>
                 <input type="text" name="school_year_major" id="schoolInfo" placeholder="예) 고려대학교 / 3학년(22학번) / 경영학과" required>
 
-                <label>모집 기수 (숫자만 입력)</label>
-                <input type="number" name="generation" id="generation" placeholder="예) 11" required>
-
                 <label>전화번호</label>
                 <input type="tel" name="phone" id="phone" placeholder="010-0000-0000" required>
 
@@ -491,16 +488,15 @@
         const legalAgreementInput = document.getElementById("legalAgreementInput");
         const summaryInput = document.getElementById("summaryInput");
 
-        // 데이터 조합 함수 (수정됨: 기수 바로 뒤에 '여' 추가)
+        // 데이터 조합 함수 (수정됨: 기수 입력 삭제, '기'만 표시)
         function generateSummary() {
             const nameInput = document.getElementById("nameBirth").value.split('/')[0].trim();
             const schoolInput = document.getElementById("schoolInfo").value.split('/')[0].trim();
-            const gen = document.getElementById("generation").value;
             const phone = document.getElementById("phone").value;
             const gender = form.querySelector('input[name="gender"]:checked').value;
             
-            // 이름 학교 11기여 010-0000-0000 형식
-            let genText = `${gen}기`;
+            // 이름 학교 기여 010-0000-0000 형식
+            let genText = `기`;
             if (gender === "여자") {
                 genText += "여";
             }
