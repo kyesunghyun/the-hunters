@@ -207,6 +207,25 @@
             margin-bottom: 10px;
         }
 
+        .gender-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .gender-group label {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .gender-group input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
         button[type="submit"] {
             width: 100%;
             margin-top: 30px;
@@ -224,6 +243,61 @@
         button[type="submit"]:hover {
             background: var(--primary-hover);
         }
+
+        /* Legal Modal */
+        #legalModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid var(--primary-color);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-text {
+            white-space: pre-wrap;
+            font-size: 14px;
+            color: var(--text-dim);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .modal-btns button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #agreeBtn { background: var(--primary-color); }
+        #agreeBtn:hover { background: var(--primary-hover); }
+        #disagreeBtn { background: #333; }
+        #disagreeBtn:hover { background: #444; }
 
         /* Footer */
         footer {
@@ -336,9 +410,16 @@
         <div class="card form-container">
             <form id="joinForm" action="https://formspree.io/f/xlgkddrw" method="POST">
                 <input type="hidden" name="_subject" value="더헌터스 새로운 지원서 접수!">
+                <input type="hidden" name="legal_agreement" id="legalAgreementInput" value="해당없음">
                 
-                <label>이름 / 생년월일 / 성별</label>
-                <input type="text" name="name_birth_gender" placeholder="예) 김수진 / 030106 / 여자" required>
+                <label>이름 / 생년월일</label>
+                <input type="text" name="name_birth" placeholder="예) 김수진 / 030106" required>
+
+                <label>성별</label>
+                <div class="gender-group">
+                    <label><input type="radio" name="gender" value="남자" required> 남자</label>
+                    <label><input type="radio" name="gender" value="여자" required> 여자</label>
+                </div>
 
                 <label>학교 / 학년(학번) / 학과</label>
                 <input type="text" name="school_year_major" placeholder="예) 고려대학교 / 3학년(22학번) / 경영학과" required>
@@ -357,6 +438,38 @@
         </div>
     </section>
 
+    <!-- Legal Modal -->
+    <div id="legalModal">
+        <div class="modal-content">
+            <h3 style="color:var(--primary-color); margin-bottom:20px;">남성 지원자 유의사항</h3>
+            <div class="modal-text">동아리 오티방 초대 전에
+유의사항이 있어 전달해드립니다.
+
+저희 동아리가 온라인이여서 욕설이나 비방등 
+상대를 모욕하고 명예를 훼손하는 일이 몇번 
+있었기에 동아리 시작 전에 
+준수사항을 고지해 드립니다 
+
+제307조 (명예훼손)①공연히 사실을 적시하여 사람의 명예를 훼손한 자는 2년이하의 징역이나 금고 또는 500만원이하의 벌금에 처한다.<개정 1995. 12. 29.>
+
+②공연히 허위의 사실을 적시하여 사람의 명예를 훼손한 자는 5년이하의 징역, 10년 이하의 자격정지 또는 1천만원 이하의 벌금에 처한다.<개정 1995. 12. 29.>
+
+위 명예훼손 사항을 충분히 인지했고 
+저희 동아리는 고지 했음을 알림니다.
+
+향후 불미스러운 일이 발생했을시에는 
+제공하신 개인정보를 통해 
+형사 입건됨을 미리 알려드립니다. 
+
+위의 사항에 미동의 시 동아리 가입이 제한될 수 있습니다.
+충분히 인지하셨으면 동의 눌러주시면 됩니다.</div>
+            <div class="modal-btns">
+                <button id="agreeBtn">동의</button>
+                <button id="disagreeBtn">비동의</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-links">
             <a href="privacy.html">개인정보 처리방침</a>
@@ -367,11 +480,37 @@
     </footer>
 
     <script>
-        // Form Submission
-        document.getElementById("joinForm").addEventListener("submit", async function(e){
+        const form = document.getElementById("joinForm");
+        const legalModal = document.getElementById("legalModal");
+        const agreeBtn = document.getElementById("agreeBtn");
+        const disagreeBtn = document.getElementById("disagreeBtn");
+        const legalAgreementInput = document.getElementById("legalAgreementInput");
+
+        form.addEventListener("submit", async function(e){
             e.preventDefault();
-            const form = e.target;
-            const data = new FormData(form);
+            const formData = new FormData(form);
+            const gender = formData.get("gender");
+
+            if (gender === "남자") {
+                legalModal.style.display = "flex";
+            } else {
+                legalAgreementInput.value = "해당없음(여자)";
+                submitFormData(formData);
+            }
+        });
+
+        agreeBtn.onclick = () => {
+            legalAgreementInput.value = "동의함";
+            legalModal.style.display = "none";
+            submitFormData(new FormData(form));
+        };
+
+        disagreeBtn.onclick = () => {
+            alert("법적사항 미동의로 동아리 가입이 제한됩니다.");
+            legalModal.style.display = "none";
+        };
+
+        async function submitFormData(data) {
             const button = form.querySelector('button[type="submit"]');
             button.disabled = true;
             button.textContent = "보내는 중...";
@@ -383,8 +522,17 @@
                     headers: { 'Accept': 'application/json' }
                 });
                 if (response.ok) {
-                    alert("지원이 완료되었습니다. 확인 후 연락드리겠습니다.");
+                    alert(
+`주식투자연합동아리 더헌터스 지원이 완료되었습니다.
+
+인원이 다 차면 카카오톡 단톡방에서 오티 진행합니다.
+
+최근 금융사와의 협업을 위해 동아리명을 기존 키움헌터스에서 더헌터스로 변경한 점 참고 부탁드립니다!
+
+기다려주셔서 감사합니다😊`
+                    );
                     form.reset();
+                    legalAgreementInput.value = "해당없음";
                 } else {
                     alert("오류가 발생했습니다. 다시 시도해주세요.");
                 }
@@ -394,7 +542,7 @@
                 button.disabled = false;
                 button.textContent = "지원하기";
             }
-        });
+        }
     </script>
 </body>
 </html>
