@@ -408,12 +408,13 @@
     <section id="apply">
         <h2 class="section-title">지원하기</h2>
         <div class="card form-container">
-            <form id="joinForm" action="https://formspree.io/f/xlgkddrw" method="POST">
-                <input type="hidden" name="_subject" value="더헌터스 새로운 지원서 접수!">
+            <!-- action에 구글 앱스 스크립트 URL을 넣으시면 됩니다. 가이드를 참고해 주세요. -->
+            <form id="joinForm" action="GOOGLE_SCRIPT_URL_HERE" method="POST">
                 <input type="hidden" name="legal_agreement" id="legalAgreementInput" value="해당없음">
+                <input type="hidden" name="summary" id="summaryInput">
                 
                 <label>이름 / 생년월일</label>
-                <input type="text" name="name_birth" placeholder="예) 김수진 / 030106" required>
+                <input type="text" name="name_birth" id="nameBirth" placeholder="예) 김수진 / 030106" required>
 
                 <label>성별</label>
                 <div class="gender-group">
@@ -422,10 +423,13 @@
                 </div>
 
                 <label>학교 / 학년(학번) / 학과</label>
-                <input type="text" name="school_year_major" placeholder="예) 고려대학교 / 3학년(22학번) / 경영학과" required>
+                <input type="text" name="school_year_major" id="schoolInfo" placeholder="예) 고려대학교 / 3학년(22학번) / 경영학과" required>
+
+                <label>모집 기수 (숫자만 입력)</label>
+                <input type="number" name="generation" id="generation" placeholder="예) 11" required>
 
                 <label>전화번호</label>
-                <input type="tel" name="phone" placeholder="010-0000-0000" required>
+                <input type="tel" name="phone" id="phone" placeholder="010-0000-0000" required>
 
                 <label>투자경력</label>
                 <textarea name="experience" rows="4" placeholder="예) 투자대회 참가 경험이 있습니다." required></textarea>
@@ -485,23 +489,49 @@
         const agreeBtn = document.getElementById("agreeBtn");
         const disagreeBtn = document.getElementById("disagreeBtn");
         const legalAgreementInput = document.getElementById("legalAgreementInput");
+        const summaryInput = document.getElementById("summaryInput");
+
+        // 데이터 조합 함수
+        function generateSummary() {
+            const name = document.getElementById("nameBirth").value.split('/')[0].trim();
+            const school = document.getElementById("schoolInfo").value.split('/')[0].trim();
+            const gen = document.getElementById("generation").value;
+            const phone = document.getElementById("phone").value;
+            const gender = form.querySelector('input[name="gender"]:checked').value;
+            
+            let summary = `${name} ${school} ${gen}기 ${phone}`;
+            if (gender === "여자") {
+                summary += "여";
+            }
+            return summary;
+        }
 
         form.addEventListener("submit", async function(e){
             e.preventDefault();
+            
+            // 시트 주소가 설정되지 않았을 경우 안내
+            if (form.action.includes("GOOGLE_SCRIPT_URL_HERE")) {
+                alert("구글 시트 연동 설정이 필요합니다. 제공해드린 가이드를 확인해 주세요!");
+                return;
+            }
+
             const formData = new FormData(form);
             const gender = formData.get("gender");
+            summaryInput.value = generateSummary();
 
             if (gender === "남자") {
                 legalModal.style.display = "flex";
             } else {
                 legalAgreementInput.value = "해당없음(여자)";
-                submitFormData(formData);
+                submitFormData(new FormData(form));
             }
         });
 
         agreeBtn.onclick = () => {
             legalAgreementInput.value = "동의함";
             legalModal.style.display = "none";
+            // 동의 후 다시 데이터를 폼에서 읽어와 요약 정보를 갱신하여 제출
+            summaryInput.value = generateSummary();
             submitFormData(new FormData(form));
         };
 
@@ -516,13 +546,15 @@
             button.textContent = "보내는 중...";
 
             try {
+                // 구글 앱스 스크립트는 fetch 시 no-cors 모드가 필요할 수 있음
                 const response = await fetch(form.action, {
-                    method: form.method,
+                    method: 'POST',
                     body: data,
-                    headers: { 'Accept': 'application/json' }
+                    mode: 'no-cors' 
                 });
-                if (response.ok) {
-                    alert(
+                
+                // no-cors 모드에서는 response.ok를 확인할 수 없으므로 성공으로 간주하고 처리
+                alert(
 `주식투자연합동아리 더헌터스 지원이 완료되었습니다.
 
 인원이 다 차면 카카오톡 단톡방에서 오티 진행합니다.
@@ -530,14 +562,12 @@
 최근 금융사와의 협업을 위해 동아리명을 기존 키움헌터스에서 더헌터스로 변경한 점 참고 부탁드립니다!
 
 기다려주셔서 감사합니다😊`
-                    );
-                    form.reset();
-                    legalAgreementInput.value = "해당없음";
-                } else {
-                    alert("오류가 발생했습니다. 다시 시도해주세요.");
-                }
+                );
+                form.reset();
+                legalAgreementInput.value = "해당없음";
+                
             } catch (error) {
-                alert("네트워크 오류가 발생했습니다.");
+                alert("전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
             } finally {
                 button.disabled = false;
                 button.textContent = "지원하기";
