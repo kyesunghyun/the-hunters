@@ -7,28 +7,6 @@
 
 <style>
 
-:root {
-    --bg-color: linear-gradient(180deg,#0a0a0a,#121212,#1b1033);
-    --text-color: #ffffff;
-    --card-bg: rgba(255,255,255,0.05);
-    --border-color: rgba(157,77,255,.25);
-    --input-bg: #232323;
-    --subtitle-color: #bdbdbd;
-    --footer-color: #888;
-    --btn-bg: #8b3dff;
-    --btn-text: #ffffff;
-}
-
-body.light-mode {
-    --bg-color: #f8f9fa;
-    --text-color: #212529;
-    --card-bg: #ffffff;
-    --border-color: #dee2e6;
-    --input-bg: #f1f3f5;
-    --subtitle-color: #495057;
-    --footer-color: #6c757d;
-}
-
 *{
     margin:0;
     padding:0;
@@ -37,40 +15,18 @@ body.light-mode {
 }
 
 body{
-    background: var(--bg-color);
-    color: var(--text-color);
+    background:linear-gradient(180deg,#0a0a0a,#121212,#1b1033);
+    color:white;
     display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
     padding:30px 15px;
-    transition: background 0.3s, color 0.3s;
 }
 
 .container{
     width:100%;
     max-width:650px;
-    position: relative;
-}
-
-.theme-toggle {
-    position: absolute;
-    top: -40px;
-    right: 0;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    backdrop-filter: blur(15px);
-    transition: 0.2s;
-}
-
-.theme-toggle:hover {
-    background: var(--border-color);
 }
 
 .logo{
@@ -89,18 +45,17 @@ body{
 
 .subtitle{
     text-align:center;
-    color: var(--subtitle-color);
+    color:#bdbdbd;
     margin-top:8px;
     margin-bottom:30px;
 }
 
 .card{
-    background: var(--card-bg);
+    background:rgba(255,255,255,0.05);
     backdrop-filter:blur(15px);
-    border:1px solid var(--border-color);
+    border:1px solid rgba(157,77,255,.25);
     border-radius:24px;
     padding:30px;
-    transition: background 0.3s, border 0.3s;
 }
 
 label{
@@ -116,10 +71,9 @@ textarea{
     padding:14px;
     border:none;
     border-radius:12px;
-    background: var(--input-bg);
-    color: var(--text-color);
+    background:#232323;
+    color:white;
     font-size:15px;
-    transition: background 0.3s, color 0.3s;
 }
 
 textarea{
@@ -132,8 +86,8 @@ button{
     padding:16px;
     border:none;
     border-radius:14px;
-    background: var(--btn-bg);
-    color: var(--btn-text);
+    background:#8b3dff;
+    color:white;
     font-size:18px;
     font-weight:700;
     cursor:pointer;
@@ -147,7 +101,7 @@ button:hover{
 .footer{
     text-align:center;
     margin-top:20px;
-    color: var(--footer-color);
+    color:#888;
 }
 
 </style>
@@ -156,8 +110,6 @@ button:hover{
 <body>
 
 <div class="container">
-
-    <button class="theme-toggle" id="themeToggle">Light Mode</button>
 
     <img src="logo.png" alt="THE HUNTERS" class="logo">
 
@@ -221,30 +173,6 @@ button:hover{
 </div>
 
 <script>
-
-const themeToggle = document.getElementById("themeToggle");
-const body = document.body;
-
-// Check for saved theme preference
-const currentTheme = localStorage.getItem("theme");
-if (currentTheme === "light") {
-    body.classList.add("light-mode");
-    themeToggle.textContent = "Dark Mode";
-}
-
-themeToggle.addEventListener("click", () => {
-    body.classList.toggle("light-mode");
-    
-    let theme = "dark";
-    if (body.classList.contains("light-mode")) {
-        theme = "light";
-        themeToggle.textContent = "Dark Mode";
-    } else {
-        themeToggle.textContent = "Light Mode";
-    }
-    
-    localStorage.setItem("theme", theme);
-});
 
 document.getElementById("joinForm").addEventListener("submit", async function(e){
 
