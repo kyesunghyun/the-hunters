@@ -169,34 +169,39 @@ button:hover{
 
     <div class="card">
 
-        <form id="joinForm">
+        <form id="joinForm" action="https://formspree.io/f/xlgkddrw" method="POST">
 
             <label>이름 / 생년월일 / 성별</label>
             <input
             type="text"
+            name="name_birth_gender"
             placeholder="예) 김수진 / 030106 / 여자"
             required>
 
             <label>학교 / 학년(학번) / 학과</label>
             <input
             type="text"
+            name="school_year_major"
             placeholder="예) 고려대학교 / 3학년(22학번) / 경영학과"
             required>
 
             <label>전화번호</label>
             <input
             type="tel"
+            name="phone"
             placeholder="010-0000-0000"
             required>
 
             <label>투자경력</label>
             <textarea
+            name="experience"
             rows="4"
             placeholder="예) 투자대회 참가 경험이 있습니다."
             required></textarea>
 
             <label>지원동기</label>
             <textarea
+            name="motivation"
             rows="5"
             placeholder="더헌터스 지원동기를 작성해주세요."
             required></textarea>
@@ -241,21 +246,45 @@ themeToggle.addEventListener("click", () => {
     localStorage.setItem("theme", theme);
 });
 
-document.getElementById("joinForm").addEventListener("submit", function(e){
+document.getElementById("joinForm").addEventListener("submit", async function(e){
 
     e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    const button = form.querySelector('button[type="submit"]');
+    
+    button.disabled = true;
+    button.textContent = "보내는 중...";
 
-    alert(
-`주식투자연합동아리 더헌터스 가등록 되셨습니다.
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            alert(
+`주식투자연합동아리 더헌터스 지원이 완료되었습니다.
 
 인원이 다 차면 카카오톡 단톡방에서 오티 진행합니다.
 
 최근 금융사와의 협업을 위해 동아리명을 기존 키움헌터스에서 더헌터스로 변경한 점 참고 부탁드립니다!
 
 기다려주셔서 감사합니다😊`
-    );
-
-    this.reset();
+            );
+            form.reset();
+        } else {
+            alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        }
+    } catch (error) {
+        alert("네트워크 오류가 발생했습니다.");
+    } finally {
+        button.disabled = false;
+        button.textContent = "지원하기";
+    }
 });
 
 </script>
