@@ -1,225 +1,400 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE HUNTERS 지원서</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE HUNTERS | 대한민국 대학생 주식투자 연합동아리</title>
+    <meta name="description" content="전국 100여 개 대학교, 850명 이상의 회원이 함께하는 주식투자 연합동아리 더헌터스(구 키움헌터스)입니다. 기초부터 실전 투자대회 입상까지 함께 성장합니다.">
+    <meta name="keywords" content="주식동아리, 대학생주식투자, 더헌터스, 키움헌터스, 주식스터디, 모의투자대회">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6405401536665357" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-6405401536665357">
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6405401536665357"
-     crossorigin="anonymous"></script>
-<meta name="google-adsense-account" content="ca-pub-6405401536665357">
+    <style>
+        :root {
+            --primary-color: #9d4dff;
+            --primary-hover: #8b3dff;
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-dim: #bdbdbd;
+            --border-color: rgba(157, 77, 255, 0.25);
+        }
 
-<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Pretendard',sans-serif;
-}
+        body {
+            background: linear-gradient(180deg, #0a0a0a, #121212, #1b1033);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-body{
-    background:linear-gradient(180deg,#0a0a0a,#121212,#1b1033);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    padding:30px 15px;
-}
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-.container{
-    width:100%;
-    max-width:650px;
-}
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.logo{
-    width:180px;
-    display:block;
-    margin:0 auto 20px;
-}
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
 
-.title{
-    text-align:center;
-    color:#9d4dff;
-    font-size:42px;
-    font-weight:800;
-    letter-spacing:2px;
-}
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
 
-.subtitle{
-    text-align:center;
-    color:#bdbdbd;
-    margin-top:8px;
-    margin-bottom:30px;
-}
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
 
-.card{
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(15px);
-    border:1px solid rgba(157,77,255,.25);
-    border-radius:24px;
-    padding:30px;
-}
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
 
-label{
-    display:block;
-    margin-top:18px;
-    margin-bottom:8px;
-    font-weight:600;
-}
+        /* Hero Section */
+        header {
+            padding: 150px 20px 80px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-input,
-textarea{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    background:#232323;
-    color:white;
-    font-size:15px;
-}
+        .hero-logo {
+            width: 150px;
+            margin-bottom: 30px;
+        }
 
-textarea{
-    resize:none;
-}
+        .title {
+            font-size: 52px;
+            font-weight: 800;
+            background: linear-gradient(to right, #ffffff, #9d4dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
 
-button{
-    width:100%;
-    margin-top:25px;
-    padding:16px;
-    border:none;
-    border-radius:14px;
-    background:#8b3dff;
-    color:white;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    transition:.2s;
-}
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
 
-button:hover{
-    transform:translateY(-2px);
-}
+        .btn-main {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
 
-.footer{
-    text-align:center;
-    margin-top:20px;
-    color:#888;
-}
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(157, 77, 255, 0.3);
+        }
 
-</style>
+        /* Sections */
+        section {
+            padding: 80px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 35px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* Form Section */
+        .form-container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #232323;
+            color: white;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            margin-top: 30px;
+            padding: 18px;
+            border: none;
+            border-radius: 14px;
+            background: var(--primary-color);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-copy {
+            color: #666;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .title { font-size: 38px; }
+            .nav-links { display: none; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">THE HUNTERS</a>
+            <div class="nav-links">
+                <a href="#about">동아리 소개</a>
+                <a href="#activity">주요 활동</a>
+                <a href="#faq">자주 묻는 질문</a>
+                <a href="#apply">지원하기</a>
+            </div>
+        </div>
+    </nav>
 
-    <img src="logo.png" alt="THE HUNTERS" class="logo">
+    <header>
+        <img src="logo.png" alt="THE HUNTERS" class="hero-logo">
+        <h1 class="title">THE HUNTERS</h1>
+        <p class="subtitle">
+            전국 100여 개 대학교, 850명 이상의 회원이 함께하는<br>
+            대한민국 최대 규모의 대학생 주식투자 연합동아리입니다.
+        </p>
+        <a href="#apply" class="btn-main">지금 지원하기</a>
+    </header>
 
-    <h1 class="title">THE HUNTERS</h1>
+    <section id="about">
+        <h2 class="section-title">동아리 소개</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Our History</h3>
+                <p>기존 '키움헌터스'에서 금융권 협업 및 브랜드 확장을 위해 '더헌터스'로 새롭게 도약했습니다. 수년간 쌓아온 투자 데이터와 커뮤니티 노하우를 바탕으로 운영됩니다.</p>
+            </div>
+            <div class="card">
+                <h3>Our Goal</h3>
+                <p>단순한 수익 추구를 넘어, 주식 투자의 기초 원리부터 거시 경제 분석까지 학습하며 올바른 투자 가치관을 정립하는 것을 목표로 합니다.</p>
+            </div>
+            <div class="card">
+                <h3>Our Network</h3>
+                <p>상경계열은 물론 공학, 의학, 예술 등 다양한 전공의 대학생들이 모여 다각적인 시각으로 시장을 분석하고 정보를 공유합니다.</p>
+            </div>
+        </div>
+    </section>
 
-    <p class="subtitle">
-        대한민국 대학생 주식투자 연합동아리
-    </p>
+    <section id="activity">
+        <h2 class="section-title">주요 활동</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>정기 교육 및 세미나</h3>
+                <p>매주 온라인 강의와 실시간 토론을 통해 투자 기초와 실전 매매 기법을 학습합니다. 초보자도 쉽게 따라올 수 있는 커리큘럼을 제공합니다.</p>
+            </div>
+            <div class="card">
+                <h3>모의투자대회 입상 전략</h3>
+                <p>키움증권 등 주요 증권사 대학생 모의투자대회 입상을 위한 체계적인 스터디를 운영하며, 실제 다수의 수상자를 배출한 전략을 공유합니다.</p>
+            </div>
+            <div class="card">
+                <h3>섹터 분석 스터디</h3>
+                <p>반도체, 2차전지, AI 등 유망 섹터에 대한 심도 있는 분석 보고서를 작성하고 발표하며 실질적인 기업 분석 역량을 키웁니다.</p>
+            </div>
+        </div>
+    </section>
 
-    <div class="card">
+    <section id="faq">
+        <h2 class="section-title">자주 묻는 질문</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>투자 초보자도 가능한가요?</h3>
+                <p>네, 가능합니다. 더헌터스는 기초부터 차근차근 배우고 싶은 학생들을 위해 입문자용 교육 자료와 가이드를 상시 제공하고 있습니다.</p>
+            </div>
+            <div class="card">
+                <h3>면접이나 가입비가 있나요?</h3>
+                <p>더헌터스는 더 많은 학생들에게 기회를 제공하기 위해 별도의 면접과 가입비 없이 운영되는 자율적인 연합 동아리입니다.</p>
+            </div>
+        </div>
+    </section>
 
-        <form id="joinForm" action="https://formspree.io/f/xlgkddrw" method="POST">
+    <section id="apply">
+        <h2 class="section-title">지원하기</h2>
+        <div class="card form-container">
+            <form id="joinForm" action="https://formspree.io/f/xlgkddrw" method="POST">
+                <input type="hidden" name="_subject" value="더헌터스 새로운 지원서 접수!">
+                
+                <label>이름 / 생년월일 / 성별</label>
+                <input type="text" name="name_birth_gender" placeholder="예) 김수진 / 030106 / 여자" required>
 
-            <label>이름 / 생년월일 / 성별</label>
-            <input
-            type="text"
-            name="name_birth_gender"
-            placeholder="예) 김수진 / 030106 / 여자"
-            required>
+                <label>학교 / 학년(학번) / 학과</label>
+                <input type="text" name="school_year_major" placeholder="예) 고려대학교 / 3학년(22학번) / 경영학과" required>
 
-            <label>학교 / 학년(학번) / 학과</label>
-            <input
-            type="text"
-            name="school_year_major"
-            placeholder="예) 고려대학교 / 3학년(22학번) / 경영학과"
-            required>
+                <label>전화번호</label>
+                <input type="tel" name="phone" placeholder="010-0000-0000" required>
 
-            <label>전화번호</label>
-            <input
-            type="tel"
-            name="phone"
-            placeholder="010-0000-0000"
-            required>
+                <label>투자경력</label>
+                <textarea name="experience" rows="4" placeholder="예) 투자대회 참가 경험이 있습니다." required></textarea>
 
-            <label>투자경력</label>
-            <textarea
-            name="experience"
-            rows="4"
-            placeholder="예) 투자대회 참가 경험이 있습니다."
-            required></textarea>
+                <label>지원동기</label>
+                <textarea name="motivation" rows="5" placeholder="더헌터스 지원동기를 작성해주세요." required></textarea>
 
-            <label>지원동기</label>
-            <textarea
-            name="motivation"
-            rows="5"
-            placeholder="더헌터스 지원동기를 작성해주세요."
-            required></textarea>
+                <button type="submit">지원하기</button>
+            </form>
+        </div>
+    </section>
 
-            <button type="submit">
-                지원하기
-            </button>
+    <footer>
+        <div class="footer-links">
+            <a href="privacy.html">개인정보 처리방침</a>
+            <a href="#about">동아리 소개</a>
+            <a href="mailto:contact@thehunters.co.kr">문의하기</a>
+        </div>
+        <p class="footer-copy">© 2026 THE HUNTERS. All rights reserved.</p>
+    </footer>
 
-        </form>
+    <script>
+        // Form Submission
+        document.getElementById("joinForm").addEventListener("submit", async function(e){
+            e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
+            const button = form.querySelector('button[type="submit"]');
+            button.disabled = true;
+            button.textContent = "보내는 중...";
 
-    </div>
-
-    <div class="footer">
-        © THE HUNTERS
-    </div>
-
-</div>
-
-<script>
-
-document.getElementById("joinForm").addEventListener("submit", async function(e){
-
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-    const button = form.querySelector('button[type="submit"]');
-    
-    button.disabled = true;
-    button.textContent = "보내는 중...";
-
-    try {
-        const response = await fetch(form.action, {
-            method: form.method,
-            body: data,
-            headers: {
-                'Accept': 'application/json'
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    alert("지원이 완료되었습니다. 확인 후 연락드리겠습니다.");
+                    form.reset();
+                } else {
+                    alert("오류가 발생했습니다. 다시 시도해주세요.");
+                }
+            } catch (error) {
+                alert("네트워크 오류가 발생했습니다.");
+            } finally {
+                button.disabled = false;
+                button.textContent = "지원하기";
             }
         });
-
-        if (response.ok) {
-            alert(
-`주식투자연합동아리 더헌터스 지원이 완료되었습니다.
-
-인원이 다 차면 카카오톡 단톡방에서 오티 진행합니다.
-
-최근 금융사와의 협업을 위해 동아리명을 기존 키움헌터스에서 더헌터스로 변경한 점 참고 부탁드립니다!
-
-기다려주셔서 감사합니다😊`
-            );
-            form.reset();
-        } else {
-            alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-        }
-    } catch (error) {
-        alert("네트워크 오류가 발생했습니다.");
-    } finally {
-        button.disabled = false;
-        button.textContent = "지원하기";
-    }
-});
-
-</script>
-
+    </script>
 </body>
 </html>
