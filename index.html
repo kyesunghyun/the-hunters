@@ -491,7 +491,7 @@
         const legalAgreementInput = document.getElementById("legalAgreementInput");
         const summaryInput = document.getElementById("summaryInput");
 
-        // 데이터 조합 함수 (수정됨: 전화번호 포함 및 포맷 고정)
+        // 데이터 조합 함수 (수정됨: 기수 바로 뒤에 '여' 추가)
         function generateSummary() {
             const nameInput = document.getElementById("nameBirth").value.split('/')[0].trim();
             const schoolInput = document.getElementById("schoolInfo").value.split('/')[0].trim();
@@ -499,12 +499,13 @@
             const phone = document.getElementById("phone").value;
             const gender = form.querySelector('input[name="gender"]:checked').value;
             
-            // 이름 학교 11기 010-0000-0000(여) 형식
-            let summary = `${nameInput} ${schoolInput} ${gen}기 ${phone}`;
+            // 이름 학교 11기여 010-0000-0000 형식
+            let genText = `${gen}기`;
             if (gender === "여자") {
-                summary += "여";
+                genText += "여";
             }
-            return summary;
+            
+            return `${nameInput} ${schoolInput} ${genText} ${phone}`;
         }
 
         form.addEventListener("submit", async function(e){
