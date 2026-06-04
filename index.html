@@ -408,8 +408,8 @@
     <section id="apply">
         <h2 class="section-title">지원하기</h2>
         <div class="card form-container">
-            <!-- action에 구글 앱스 스크립트 URL을 넣으시면 됩니다. 가이드를 참고해 주세요. -->
-            <form id="joinForm" action="GOOGLE_SCRIPT_URL_HERE" method="POST">
+            <!-- action에 구글 앱스 스크립트 URL을 넣으시면 됩니다. -->
+            <form id="joinForm" action="https://script.google.com/macros/s/AKfycbyD6NshH3YpY4F1f1rG2G0I0O0O0O0O0O/exec" method="POST">
                 <input type="hidden" name="legal_agreement" id="legalAgreementInput" value="해당없음">
                 <input type="hidden" name="summary" id="summaryInput">
                 
@@ -491,15 +491,16 @@
         const legalAgreementInput = document.getElementById("legalAgreementInput");
         const summaryInput = document.getElementById("summaryInput");
 
-        // 데이터 조합 함수
+        // 데이터 조합 함수 (수정됨: 전화번호 포함 및 포맷 고정)
         function generateSummary() {
-            const name = document.getElementById("nameBirth").value.split('/')[0].trim();
-            const school = document.getElementById("schoolInfo").value.split('/')[0].trim();
+            const nameInput = document.getElementById("nameBirth").value.split('/')[0].trim();
+            const schoolInput = document.getElementById("schoolInfo").value.split('/')[0].trim();
             const gen = document.getElementById("generation").value;
             const phone = document.getElementById("phone").value;
             const gender = form.querySelector('input[name="gender"]:checked').value;
             
-            let summary = `${name} ${school} ${gen}기 ${phone}`;
+            // 이름 학교 11기 010-0000-0000(여) 형식
+            let summary = `${nameInput} ${schoolInput} ${gen}기 ${phone}`;
             if (gender === "여자") {
                 summary += "여";
             }
@@ -509,15 +510,11 @@
         form.addEventListener("submit", async function(e){
             e.preventDefault();
             
-            // 시트 주소가 설정되지 않았을 경우 안내
-            if (form.action.includes("GOOGLE_SCRIPT_URL_HERE")) {
-                alert("구글 시트 연동 설정이 필요합니다. 제공해드린 가이드를 확인해 주세요!");
-                return;
-            }
+            // 요약 정보 생성
+            summaryInput.value = generateSummary();
 
             const formData = new FormData(form);
             const gender = formData.get("gender");
-            summaryInput.value = generateSummary();
 
             if (gender === "남자") {
                 legalModal.style.display = "flex";
@@ -530,7 +527,6 @@
         agreeBtn.onclick = () => {
             legalAgreementInput.value = "동의함";
             legalModal.style.display = "none";
-            // 동의 후 다시 데이터를 폼에서 읽어와 요약 정보를 갱신하여 제출
             summaryInput.value = generateSummary();
             submitFormData(new FormData(form));
         };
@@ -546,14 +542,12 @@
             button.textContent = "보내는 중...";
 
             try {
-                // 구글 앱스 스크립트는 fetch 시 no-cors 모드가 필요할 수 있음
-                const response = await fetch(form.action, {
+                await fetch(form.action, {
                     method: 'POST',
                     body: data,
                     mode: 'no-cors' 
                 });
                 
-                // no-cors 모드에서는 response.ok를 확인할 수 없으므로 성공으로 간주하고 처리
                 alert(
 `주식투자연합동아리 더헌터스 지원이 완료되었습니다.
 
