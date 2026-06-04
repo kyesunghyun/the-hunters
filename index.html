@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE HUNTERS 지원서</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Pretendard',sans-serif;
+}
+
+body{
+    background:linear-gradient(180deg,#0a0a0a,#121212,#1b1033);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:30px 15px;
+}
+
+.container{
+    width:100%;
+    max-width:650px;
+}
+
+.logo{
+    width:180px;
+    display:block;
+    margin:0 auto 20px;
+}
+
+.title{
+    text-align:center;
+    color:#9d4dff;
+    font-size:42px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#bdbdbd;
+    margin-top:8px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(157,77,255,.25);
+    border-radius:24px;
+    padding:30px;
+}
+
+label{
+    display:block;
+    margin-top:18px;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#232323;
+    color:white;
+    font-size:15px;
+}
+
+textarea{
+    resize:none;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:#8b3dff;
+    color:white;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.footer{
+    text-align:center;
+    margin-top:20px;
+    color:#888;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <img src="logo.png" alt="THE HUNTERS" class="logo">
+
+    <h1 class="title">THE HUNTERS</h1>
+
+    <p class="subtitle">
+        대한민국 대학생 주식투자 연합동아리
+    </p>
+
+    <div class="card">
+
+        <form id="joinForm">
+
+            <label>이름 / 생년월일 / 성별</label>
+            <input
+            type="text"
+            placeholder="예) 김수진 / 030106 / 여자"
+            required>
+
+            <label>학교 / 학년(학번) / 학과</label>
+            <input
+            type="text"
+            placeholder="예) 고려대학교 / 3학년(22학번) / 경영학과"
+            required>
+
+            <label>전화번호</label>
+            <input
+            type="tel"
+            placeholder="010-0000-0000"
+            required>
+
+            <label>투자경력</label>
+            <textarea
+            rows="4"
+            placeholder="예) 투자대회 참가 경험이 있습니다."
+            required></textarea>
+
+            <label>지원동기</label>
+            <textarea
+            rows="5"
+            placeholder="더헌터스 지원동기를 작성해주세요."
+            required></textarea>
+
+            <button type="submit">
+                지원하기
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="footer">
+        © THE HUNTERS
+    </div>
+
+</div>
+
+<script>
+
+document.getElementById("joinForm").addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    alert(
+`주식투자연합동아리 더헌터스 가등록 되셨습니다.
+
+인원이 다 차면 카카오톡 단톡방에서 오티 진행합니다.
+
+최근 금융사와의 협업을 위해 동아리명을 기존 키움헌터스에서 더헌터스로 변경한 점 참고 부탁드립니다!
+
+기다려주셔서 감사합니다😊`
+    );
+
+    this.reset();
+});
+
+</script>
+
+</body>
+</html>
