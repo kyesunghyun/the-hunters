@@ -37,9 +37,9 @@
         body {
             min-height: 100vh;
             background:
-                radial-gradient(circle at 50% 0%, rgba(143, 85, 255, 0.22), transparent 32rem),
-                radial-gradient(circle at 85% 18%, rgba(214, 179, 106, 0.14), transparent 24rem),
-                linear-gradient(180deg, #050505 0%, #0a0a0d 46%, #110c1d 100%);
+                radial-gradient(circle at 50% 4%, rgba(143, 85, 255, 0.12), transparent 30rem),
+                radial-gradient(circle at 78% 12%, rgba(214, 179, 106, 0.08), transparent 22rem),
+                linear-gradient(180deg, #040405 0%, #09090b 48%, #0d0a13 100%);
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
@@ -52,10 +52,8 @@
             pointer-events: none;
             z-index: -1;
             background:
-                linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-            background-size: 48px 48px;
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.72), transparent 82%);
+                radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.045), transparent 34rem),
+                linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.42) 100%);
         }
 
         /* Navigation */
@@ -122,18 +120,21 @@
         header::before {
             content: '';
             position: absolute;
-            width: min(72vw, 760px);
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(143, 85, 255, 0.18), transparent 68%);
-            filter: blur(6px);
-            animation: pulseGlow 5.6s ease-in-out infinite;
+            top: 7%;
+            left: 50%;
+            width: min(78vw, 820px);
+            height: 52vh;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.08), rgba(143,85,255,0.07) 38%, transparent 72%);
+            filter: blur(10px);
+            opacity: 0.78;
         }
 
         .hero-inner {
             position: relative;
             z-index: 1;
             width: 100%;
+            animation: cameraDrift 24s ease-in-out infinite;
         }
 
         .eyebrow {
@@ -160,16 +161,36 @@
             background: linear-gradient(90deg, var(--accent-gold), transparent);
         }
 
-        .hero-logo {
+        .emblem-scene {
             width: min(62vw, 420px);
             max-width: 420px;
             margin: 0 auto 22px;
+            perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+
+        .emblem-scene::after {
+            content: '';
+            display: block;
+            width: 82%;
+            height: 18px;
+            margin: -18px auto 0;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.44), transparent 72%);
+            filter: blur(16px);
+        }
+
+        .hero-logo {
+            width: 100%;
             display: block;
             border-radius: 50%;
             filter:
-                drop-shadow(0 26px 48px rgba(0, 0, 0, 0.56))
-                drop-shadow(0 0 34px rgba(143, 85, 255, 0.28));
-            animation: emblemFloat 7s ease-in-out infinite;
+                drop-shadow(0 26px 42px rgba(0, 0, 0, 0.62))
+                drop-shadow(0 0 18px rgba(143, 85, 255, 0.16));
+            transform-origin: 50% 50%;
+            transform-style: preserve-3d;
+            animation: premiumTurn 22s ease-in-out infinite;
+            will-change: transform;
         }
 
         .title {
@@ -502,14 +523,21 @@
             }
         }
 
-        @keyframes emblemFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-10px) scale(1.015); }
+        @keyframes premiumTurn {
+            0%, 100% { transform: rotateY(-4deg) rotateX(0.8deg); }
+            50% { transform: rotateY(4deg) rotateX(-0.4deg); }
         }
 
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.52; transform: scale(0.94); }
-            50% { opacity: 0.9; transform: scale(1.04); }
+        @keyframes cameraDrift {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(0, -3px, 0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-inner,
+            .hero-logo {
+                animation: none;
+            }
         }
     </style>
 </head>
@@ -530,7 +558,9 @@
     <header>
         <div class="hero-inner">
             <div class="eyebrow">Premium Investment Network</div>
-            <img src="logo2.png" alt="THE HUNTERS" class="hero-logo">
+            <div class="emblem-scene" aria-label="THE HUNTERS premium emblem">
+                <img src="logo2-transparent.png" alt="THE HUNTERS" class="hero-logo">
+            </div>
             <h1 class="title">THE HUNTERS</h1>
             <p class="subtitle">
                 전국 100여 개 대학교, 1,500명 이상의 회원이 함께하는<br>
