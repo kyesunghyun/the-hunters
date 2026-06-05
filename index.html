@@ -14,16 +14,18 @@
     <style>
         :root {
             --primary-color: #8f55ff;
-            --primary-hover: #a777ff;
-            --accent-gold: #d6b36a;
+            --primary-hover: #9a68ff;
+            --accent-gold: #bfa469;
             --bg-dark: #050505;
-            --panel-bg: rgba(14, 14, 18, 0.72);
-            --card-bg: rgba(255, 255, 255, 0.045);
+            --panel-bg: rgba(13, 13, 16, 0.72);
+            --card-bg: rgba(255, 255, 255, 0.035);
             --text-main: #ffffff;
-            --text-dim: #b8b4c3;
-            --border-color: rgba(168, 119, 255, 0.26);
-            --gold-border: rgba(214, 179, 106, 0.28);
-            --shadow-purple: rgba(143, 85, 255, 0.28);
+            --text-dim: #b6b3bd;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --gold-border: rgba(191, 164, 105, 0.22);
+            --shadow-purple: rgba(143, 85, 255, 0.14);
+            --positive: #7bd8a4;
+            --negative: #ff8c8c;
         }
 
         * {
@@ -37,9 +39,8 @@
         body {
             min-height: 100vh;
             background:
-                radial-gradient(circle at 50% 4%, rgba(143, 85, 255, 0.12), transparent 30rem),
-                radial-gradient(circle at 78% 12%, rgba(214, 179, 106, 0.08), transparent 22rem),
-                linear-gradient(180deg, #040405 0%, #09090b 48%, #0d0a13 100%);
+                radial-gradient(circle at 50% 0%, rgba(95, 60, 150, 0.12), transparent 32rem),
+                linear-gradient(180deg, #040405 0%, #09090b 48%, #0b0910 100%);
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
@@ -52,7 +53,7 @@
             pointer-events: none;
             z-index: -1;
             background:
-                radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.045), transparent 34rem),
+                radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.035), transparent 34rem),
                 linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.42) 100%);
         }
 
@@ -61,7 +62,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(5, 5, 6, 0.76);
+            background: rgba(5, 5, 6, 0.84);
             backdrop-filter: blur(18px);
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
@@ -82,7 +83,6 @@
             color: var(--text-main);
             text-decoration: none;
             letter-spacing: 2px;
-            text-shadow: 0 0 22px rgba(143, 85, 255, 0.42);
         }
 
         .nav-links {
@@ -107,7 +107,7 @@
         /* Hero Section */
         header {
             position: relative;
-            padding: 118px 20px 72px;
+            padding: 112px 20px 60px;
             text-align: center;
             max-width: 1120px;
             margin: 0 auto;
@@ -125,16 +125,15 @@
             width: min(78vw, 820px);
             height: 52vh;
             transform: translateX(-50%);
-            background: radial-gradient(ellipse at center, rgba(255,255,255,0.08), rgba(143,85,255,0.07) 38%, transparent 72%);
-            filter: blur(10px);
-            opacity: 0.78;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.06), rgba(95,60,150,0.055) 38%, transparent 72%);
+            filter: blur(14px);
+            opacity: 0.66;
         }
 
         .hero-inner {
             position: relative;
             z-index: 1;
             width: 100%;
-            animation: cameraDrift 24s ease-in-out infinite;
         }
 
         .eyebrow {
@@ -145,7 +144,7 @@
             color: var(--accent-gold);
             font-size: 12px;
             font-weight: 800;
-            letter-spacing: 3px;
+            letter-spacing: 2.4px;
             text-transform: uppercase;
         }
 
@@ -162,10 +161,10 @@
         }
 
         .emblem-scene {
-            width: min(62vw, 420px);
-            max-width: 420px;
+            width: min(72vw, 520px);
+            max-width: 520px;
             margin: 0 auto 22px;
-            perspective: 1200px;
+            perspective: 1400px;
             transform-style: preserve-3d;
         }
 
@@ -173,11 +172,11 @@
             content: '';
             display: block;
             width: 82%;
-            height: 18px;
+            height: 14px;
             margin: -18px auto 0;
             border-radius: 50%;
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0.44), transparent 72%);
-            filter: blur(16px);
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.36), transparent 72%);
+            filter: blur(14px);
         }
 
         .hero-logo {
@@ -185,11 +184,11 @@
             display: block;
             border-radius: 50%;
             filter:
-                drop-shadow(0 26px 42px rgba(0, 0, 0, 0.62))
-                drop-shadow(0 0 18px rgba(143, 85, 255, 0.16));
+                drop-shadow(0 24px 36px rgba(0, 0, 0, 0.58))
+                drop-shadow(0 0 10px rgba(143, 85, 255, 0.10));
             transform-origin: 50% 50%;
             transform-style: preserve-3d;
-            animation: premiumTurn 22s ease-in-out infinite;
+            animation: premiumTurn 16s ease-in-out infinite;
             will-change: transform;
         }
 
@@ -197,12 +196,11 @@
             font-size: clamp(44px, 8vw, 86px);
             font-weight: 800;
             line-height: 0.94;
-            background: linear-gradient(115deg, #ffffff 0%, #d6b36a 38%, #a777ff 78%, #ffffff 100%);
+            background: linear-gradient(115deg, #ffffff 0%, #d8d4df 42%, #9b76e8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 22px;
             letter-spacing: 0;
-            text-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
         }
 
         .subtitle {
@@ -218,13 +216,13 @@
             gap: 1px;
             max-width: 720px;
             margin: 0 auto 34px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.075);
+            background: rgba(255,255,255,0.055);
         }
 
         .hero-stat {
             padding: 18px 14px;
-            background: rgba(7, 7, 10, 0.78);
+            background: rgba(10, 10, 13, 0.78);
             backdrop-filter: blur(14px);
         }
 
@@ -253,38 +251,25 @@
             border-radius: 999px;
             text-decoration: none;
             font-weight: 700;
-            box-shadow: 0 16px 34px rgba(94, 56, 201, 0.34);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
             transition: 0.3s;
         }
 
-        .btn-main::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            transform: translateX(-110%) skewX(-18deg);
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent);
-            transition: transform 0.6s;
-        }
-
         .btn-main:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 42px rgba(143, 85, 255, 0.42);
-        }
-
-        .btn-main:hover::before {
-            transform: translateX(110%) skewX(-18deg);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
         }
 
         /* Sections */
         section {
-            padding: 86px 20px;
+            padding: 72px 20px;
             max-width: 1100px;
             margin: 0 auto;
         }
 
         .section-title {
             font-size: clamp(28px, 4vw, 42px);
-            margin-bottom: 38px;
+            margin-bottom: 32px;
             text-align: center;
             position: relative;
             letter-spacing: 0;
@@ -298,7 +283,6 @@
             background: linear-gradient(90deg, var(--accent-gold), var(--primary-color));
             margin: 15px auto 0;
             border-radius: 2px;
-            box-shadow: 0 0 24px rgba(143, 85, 255, 0.55);
         }
 
         .grid {
@@ -311,13 +295,13 @@
             position: relative;
             overflow: hidden;
             background:
-                linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)),
+                linear-gradient(145deg, rgba(255,255,255,0.052), rgba(255,255,255,0.022)),
                 var(--card-bg);
             backdrop-filter: blur(18px);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 35px;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 20px 52px rgba(0,0,0,0.25);
+            padding: 32px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.055), 0 12px 32px rgba(0,0,0,0.18);
             transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
@@ -326,15 +310,15 @@
             position: absolute;
             inset: 0;
             pointer-events: none;
-            background: linear-gradient(120deg, transparent 0%, rgba(214, 179, 106, 0.08) 35%, rgba(143, 85, 255, 0.1) 62%, transparent 100%);
+            background: linear-gradient(120deg, transparent 0%, rgba(191, 164, 105, 0.045) 42%, rgba(143, 85, 255, 0.052) 70%, transparent 100%);
             opacity: 0;
             transition: opacity 0.3s;
         }
 
         .card:hover {
             border-color: rgba(214, 179, 106, 0.45);
-            transform: translateY(-5px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 26px 70px rgba(0,0,0,0.34), 0 0 34px rgba(143, 85, 255, 0.12);
+            transform: translateY(-3px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 38px rgba(0,0,0,0.24);
         }
 
         .card:hover::before {
@@ -343,15 +327,125 @@
 
         .card h3 {
             position: relative;
-            color: var(--accent-gold);
+            color: #d5c49b;
             margin-bottom: 15px;
-            font-size: 22px;
+            font-size: 21px;
         }
 
         .card p {
             position: relative;
             color: var(--text-dim);
-            font-size: 16px;
+            font-size: 15.5px;
+            line-height: 1.72;
+        }
+
+        .market-panel {
+            max-width: 1100px;
+            padding-top: 28px;
+        }
+
+        .market-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .market-kicker {
+            color: var(--accent-gold);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .market-header h2 {
+            margin-top: 6px;
+            font-size: clamp(24px, 4vw, 36px);
+            line-height: 1.15;
+        }
+
+        .market-note {
+            color: var(--text-dim);
+            font-size: 13px;
+            text-align: right;
+        }
+
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .market-card {
+            min-height: 138px;
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,0.095);
+            border-radius: 8px;
+            background: rgba(10, 10, 13, 0.64);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.045);
+        }
+
+        .market-card.wide {
+            grid-column: span 2;
+        }
+
+        .market-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .market-name {
+            color: #f4f2f8;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+        }
+
+        .market-change {
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .market-change.up { color: var(--positive); }
+        .market-change.down { color: var(--negative); }
+        .market-change.neutral { color: var(--text-dim); }
+
+        .market-value {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: 0;
+        }
+
+        .market-meta {
+            margin-top: 6px;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        .sparkline {
+            width: 100%;
+            height: 34px;
+            margin-top: 14px;
+        }
+
+        .sparkline path {
+            fill: none;
+            stroke: rgba(143, 85, 255, 0.85);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .market-insight {
+            color: var(--text-dim);
+            font-size: 14px;
             line-height: 1.7;
         }
 
@@ -511,15 +605,38 @@
         @media (max-width: 768px) {
             header {
                 min-height: auto;
-                padding-top: 116px;
+                padding: 104px 18px 48px;
             }
             .title { font-size: 42px; }
             .nav-links { display: none; }
+            .emblem-scene {
+                width: min(76vw, 340px);
+            }
             .hero-stats {
                 grid-template-columns: 1fr;
             }
+            .market-header {
+                display: block;
+            }
+            .market-note {
+                margin-top: 8px;
+                text-align: left;
+            }
+            .market-grid {
+                grid-template-columns: 1fr;
+            }
+            .market-card.wide {
+                grid-column: span 1;
+            }
             .card {
                 padding: 26px;
+            }
+            .gender-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .modal-btns {
+                flex-direction: column;
             }
         }
 
@@ -528,13 +645,7 @@
             50% { transform: rotateY(4deg) rotateX(-0.4deg); }
         }
 
-        @keyframes cameraDrift {
-            0%, 100% { transform: translate3d(0, 0, 0); }
-            50% { transform: translate3d(0, -3px, 0); }
-        }
-
         @media (prefers-reduced-motion: reduce) {
-            .hero-inner,
             .hero-logo {
                 animation: none;
             }
@@ -559,7 +670,7 @@
         <div class="hero-inner">
             <div class="eyebrow">Premium Investment Network</div>
             <div class="emblem-scene" aria-label="THE HUNTERS premium emblem">
-                <img src="logo2-transparent.png" alt="THE HUNTERS" class="hero-logo">
+                <img src="logo3.png" alt="THE HUNTERS" class="hero-logo">
             </div>
             <h1 class="title">THE HUNTERS</h1>
             <p class="subtitle">
@@ -583,6 +694,17 @@
             <a href="#apply" class="btn-main">지금 지원하기</a>
         </div>
     </header>
+
+    <section class="market-panel" aria-labelledby="marketSnapshotTitle">
+        <div class="market-header">
+            <div>
+                <div class="market-kicker">Market Snapshot</div>
+                <h2 id="marketSnapshotTitle">오늘의 시장 흐름</h2>
+            </div>
+            <p class="market-note">참고용 스냅샷</p>
+        </div>
+        <div class="market-grid" id="marketGrid" aria-live="polite"></div>
+    </section>
 
     <section id="about">
         <h2 class="section-title">동아리 소개</h2>
@@ -670,25 +792,23 @@
     <!-- Legal Modal -->
     <div id="legalModal">
         <div class="modal-content">
-            <h3 style="color:var(--primary-color); margin-bottom:20px;">남성 지원자 유의사항</h3>
+            <h3 style="color:var(--primary-color); margin-bottom:20px;">지원자 유의사항</h3>
             <div class="modal-text">동아리 오티방 초대 전에
 유의사항이 있어 전달해드립니다.
 
-저희 동아리가 온라인이여서 욕설이나 비방등 
-상대를 모욕하고 명예를 훼손하는 일이 몇번 
-있었기에 동아리 시작 전에 
-준수사항을 고지해 드립니다 
+저희 동아리는 온라인 활동을 병행하고 있어
+욕설, 비방, 명예훼손 등 타인을 침해하는 행위를
+예방하기 위해 활동 시작 전에 준수사항을 안내드립니다.
 
 제307조 (명예훼손)①공연히 사실을 적시하여 사람의 명예를 훼손한 자는 2년이하의 징역이나 금고 또는 500만원이하의 벌금에 처한다.<개정 1995. 12. 29.>
 
 ②공연히 허위의 사실을 적시하여 사람의 명예를 훼손한 자는 5년이하의 징역, 10년 이하의 자격정지 또는 1천만원 이하의 벌금에 처한다.<개정 1995. 12. 29.>
 
-위 명예훼손 사항을 충분히 인지했고 
-저희 동아리는 고지 했음을 알림니다.
+위 명예훼손 관련 사항을 충분히 인지했으며
+저희 동아리는 관련 준수사항을 사전에 고지했음을 알립니다.
 
-향후 불미스러운 일이 발생했을시에는 
-제공하신 개인정보를 통해 
-형사 입건됨을 미리 알려드립니다. 
+향후 타인의 권리를 침해하는 문제가 발생할 경우
+관련 법령과 절차에 따라 필요한 조치가 진행될 수 있습니다.
 
 위의 사항에 미동의 시 동아리 가입이 제한될 수 있습니다.
 충분히 인지하셨으면 동의 눌러주시면 됩니다.</div>
@@ -715,6 +835,46 @@
         const disagreeBtn = document.getElementById("disagreeBtn");
         const legalAgreementInput = document.getElementById("legalAgreementInput");
         const summaryInput = document.getElementById("summaryInput");
+        const marketGrid = document.getElementById("marketGrid");
+
+        const fallbackMarketData = [
+            { name: "KOSPI", value: "2,742.18", change: "+0.42%", tone: "up", meta: "대형주 중심 완만한 매수세", spark: "M2 26 L12 22 L22 24 L32 18 L42 20 L52 14 L62 16 L72 10 L82 12 L92 8" },
+            { name: "KOSDAQ", value: "873.64", change: "-0.18%", tone: "down", meta: "성장주 일부 차익 실현", spark: "M2 10 L12 12 L22 9 L32 15 L42 14 L52 19 L62 17 L72 23 L82 21 L92 25" },
+            { name: "S&P 500", value: "5,347.92", change: "+0.31%", tone: "up", meta: "기술주 실적 기대 반영", spark: "M2 24 L12 21 L22 22 L32 18 L42 16 L52 17 L62 12 L72 10 L82 11 L92 7" },
+            { name: "NASDAQ", value: "17,124.80", change: "+0.58%", tone: "up", meta: "AI·반도체 섹터 견조", spark: "M2 28 L12 25 L22 24 L32 20 L42 22 L52 16 L62 14 L72 13 L82 8 L92 6" },
+            { name: "USD/KRW", value: "1,372.40", change: "+0.09%", tone: "neutral", meta: "달러 강세 제한적", spark: "M2 17 L12 16 L22 18 L32 15 L42 17 L52 14 L62 15 L72 13 L82 14 L92 12" },
+            { name: "Market Insight", value: "Selective Risk-On", change: "Neutral", tone: "neutral", meta: "지수보다 섹터별 온도 차가 큰 장세입니다. 실적 가시성과 밸류에이션 부담을 함께 점검하는 접근이 유효합니다.", spark: "", wide: true },
+        ];
+
+        async function getMarketSnapshot() {
+            // Later, replace this fallback with a Pages Function that reads API keys from environment variables.
+            return fallbackMarketData;
+        }
+
+        function renderMarketSnapshot(items) {
+            if (!marketGrid) return;
+
+            marketGrid.innerHTML = items.map((item) => {
+                const sparkline = item.spark
+                    ? `<svg class="sparkline" viewBox="0 0 94 32" preserveAspectRatio="none" aria-hidden="true"><path d="${item.spark}"></path></svg>`
+                    : "";
+                const insightClass = item.name === "Market Insight" ? " market-insight" : "";
+
+                return `
+                    <article class="market-card${item.wide ? " wide" : ""}">
+                        <div class="market-top">
+                            <span class="market-name">${item.name}</span>
+                            <span class="market-change ${item.tone}">${item.change}</span>
+                        </div>
+                        <div class="market-value">${item.value}</div>
+                        <div class="market-meta${insightClass}">${item.meta}</div>
+                        ${sparkline}
+                    </article>
+                `;
+            }).join("");
+        }
+
+        getMarketSnapshot().then(renderMarketSnapshot);
 
         // 데이터 조합 함수 (수정됨: 기수 입력 삭제, '기'만 표시)
         function generateSummary() {
@@ -737,16 +897,7 @@
             
             // 요약 정보 생성
             summaryInput.value = generateSummary();
-
-            const formData = new FormData(form);
-            const gender = formData.get("gender");
-
-            if (gender === "남자") {
-                legalModal.style.display = "flex";
-            } else {
-                legalAgreementInput.value = "해당없음(여자)";
-                submitFormData(new FormData(form));
-            }
+            legalModal.style.display = "flex";
         });
 
         agreeBtn.onclick = () => {
@@ -757,7 +908,7 @@
         };
 
         disagreeBtn.onclick = () => {
-            alert("법적사항 미동의로 동아리 가입이 제한됩니다.");
+            alert("유의사항 미동의로 동아리 가입이 제한될 수 있습니다.");
             legalModal.style.display = "none";
         };
 
