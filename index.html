@@ -278,6 +278,21 @@
             box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
         }
 
+        .next-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 18px;
+            padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 999px;
+            color: var(--text-main);
+            text-decoration: none;
+            background: rgba(255,255,255,0.035);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
         .micro-pressable {
             transition: transform 100ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s, background 0.2s, box-shadow 0.2s;
             will-change: transform;
@@ -293,6 +308,39 @@
             padding: 72px 20px;
             max-width: 1100px;
             margin: 0 auto;
+        }
+
+        .page-section {
+            min-height: 86vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-nav {
+            position: fixed;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: grid;
+            gap: 10px;
+            z-index: 1100;
+        }
+
+        .section-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.22);
+            background: rgba(255,255,255,0.09);
+            transition: transform 0.16s, background 0.16s, border-color 0.16s;
+        }
+
+        .section-dot:hover,
+        .section-dot.active {
+            transform: scale(1.24);
+            border-color: rgba(143, 85, 255, 0.64);
+            background: rgba(143, 85, 255, 0.62);
         }
 
         .section-title {
@@ -664,37 +712,37 @@
         }
 
         .contact-section {
-            max-width: 760px;
-            padding-top: 24px;
-            padding-bottom: 18px;
+            max-width: 980px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
         }
 
         .contact-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 18px;
             border: 1px solid rgba(255,255,255,0.085);
             border-radius: 8px;
-            padding: 14px 16px;
+            padding: 18px;
             background: rgba(10, 10, 13, 0.46);
         }
 
         .contact-card h2 {
-            font-size: 15px;
-            margin-bottom: 2px;
+            font-size: 20px;
+            margin-bottom: 8px;
         }
 
         .contact-card p {
             color: var(--text-dim);
-            font-size: 12px;
+            font-size: 14px;
             line-height: 1.5;
+            margin-bottom: 14px;
         }
 
         .contact-list {
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-end;
             gap: 8px;
         }
 
@@ -894,18 +942,6 @@
             text-decoration: none;
         }
 
-        .sound-toggle {
-            margin-top: 14px;
-            padding: 7px 11px;
-            border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 999px;
-            background: rgba(255,255,255,0.035);
-            color: var(--text-dim);
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
         @media (prefers-reduced-motion: reduce) {
             .micro-pressable,
             .btn-main,
@@ -922,6 +958,12 @@
         }
 
         @media (max-width: 768px) {
+            .section-nav {
+                right: 10px;
+            }
+            .page-section {
+                min-height: auto;
+            }
             header {
                 min-height: auto;
                 padding: 104px 18px 48px;
@@ -964,9 +1006,10 @@
             .contact-list {
                 justify-content: flex-start;
             }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
             .contact-card {
-                align-items: flex-start;
-                flex-direction: column;
                 gap: 12px;
             }
             .card {
@@ -1018,16 +1061,24 @@
         <div class="nav-container">
             <a href="#" class="nav-logo">THE HUNTERS</a>
             <div class="nav-links">
-                <a href="#about">동아리 소개</a>
-                <a href="#activity">주요 활동</a>
-                <a href="#faq">자주 묻는 질문</a>
+                <a href="#market">시장정보</a>
+                <a href="#guide">안내사항</a>
+                <a href="#contact">문의</a>
                 <a href="qa.html">Q&A</a>
                 <a href="#apply">지원하기</a>
             </div>
         </div>
     </nav>
 
-    <header>
+    <div class="section-nav" aria-label="화면 이동">
+        <a class="section-dot active" href="#home" aria-label="첫 화면"></a>
+        <a class="section-dot" href="#market" aria-label="시장정보"></a>
+        <a class="section-dot" href="#guide" aria-label="안내사항"></a>
+        <a class="section-dot" href="#contact" aria-label="문의"></a>
+        <a class="section-dot" href="#apply" aria-label="지원하기"></a>
+    </div>
+
+    <header id="home" class="page-section">
         <div class="hero-inner">
             <div class="eyebrow">Premium Investment Network</div>
             <div class="emblem-scene" aria-label="THE HUNTERS premium emblem">
@@ -1053,10 +1104,11 @@
                 </div>
             </div>
             <a href="#apply" class="btn-main" id="applyButton">지금 지원하기</a>
+            <div><a href="#market" class="next-link">시장정보 보기</a></div>
         </div>
     </header>
 
-    <section class="market-panel" aria-labelledby="marketSnapshotTitle">
+    <section id="market" class="market-panel page-section" aria-labelledby="marketSnapshotTitle">
         <div class="market-header">
             <div>
                 <div class="market-kicker">Market Snapshot</div>
@@ -1073,77 +1125,42 @@
         <div class="market-grid" id="marketGrid" aria-live="polite">
             <div class="market-status">시장 정보를 불러오는 중입니다.</div>
         </div>
-    </section>
-
-    <section class="ticker-section" aria-label="THE HUNTERS Market Note">
-        <div class="ticker-shell">
-            <div class="ticker-label">THE HUNTERS Market Note</div>
-            <div class="ticker-window">
-                <div class="ticker-track" id="tickerTrack">
-                    <span class="ticker-item">KOSPI 시장 흐름 업데이트</span>
-                    <span class="ticker-item">NASDAQ 변동성 확대</span>
-                    <span class="ticker-item">USD/KRW 환율 체크</span>
-                    <span class="ticker-item">반도체·AI 섹터 관심</span>
-                    <span class="ticker-item">글로벌 증시 주요 이슈 모니터링</span>
-                    <span class="ticker-item">KOSPI 시장 흐름 업데이트</span>
-                    <span class="ticker-item">NASDAQ 변동성 확대</span>
-                    <span class="ticker-item">USD/KRW 환율 체크</span>
-                    <span class="ticker-item">반도체·AI 섹터 관심</span>
-                    <span class="ticker-item">글로벌 증시 주요 이슈 모니터링</span>
+        <div class="ticker-section" aria-label="THE HUNTERS Market Note">
+            <div class="ticker-shell">
+                <div class="ticker-label">THE HUNTERS Market Note</div>
+                <div class="ticker-window">
+                    <div class="ticker-track" id="tickerTrack">
+                        <span class="ticker-item">KOSPI 시장 흐름 업데이트</span>
+                        <span class="ticker-item">NASDAQ 변동성 확대</span>
+                        <span class="ticker-item">USD/KRW 환율 체크</span>
+                        <span class="ticker-item">반도체·AI 섹터 관심</span>
+                        <span class="ticker-item">글로벌 증시 주요 이슈 모니터링</span>
+                        <span class="ticker-item">KOSPI 시장 흐름 업데이트</span>
+                        <span class="ticker-item">NASDAQ 변동성 확대</span>
+                        <span class="ticker-item">USD/KRW 환율 체크</span>
+                        <span class="ticker-item">반도체·AI 섹터 관심</span>
+                        <span class="ticker-item">글로벌 증시 주요 이슈 모니터링</span>
+                    </div>
                 </div>
             </div>
         </div>
+        <a href="#guide" class="next-link">안내사항 보기</a>
     </section>
 
-    <section class="cms-section" aria-labelledby="noticesTitle">
+    <section id="guide" class="cms-section page-section" aria-labelledby="noticesTitle">
         <h2 class="section-title" id="noticesTitle">공지사항</h2>
         <div class="cms-list" id="noticesList">
             <div class="cms-empty">등록된 공지가 없습니다.</div>
         </div>
-    </section>
-
-    <section class="cms-section" aria-labelledby="activitiesTitle">
-        <h2 class="section-title" id="activitiesTitle">활동기록</h2>
-        <div class="cms-list" id="activitiesList">
-            <div class="cms-empty">등록된 활동기록이 없습니다.</div>
-        </div>
-    </section>
-
-    <section id="about">
-        <h2 class="section-title">동아리 소개</h2>
         <div class="grid">
             <div class="card">
-                <h3>Our History</h3>
+                <h3>동아리 소개</h3>
                 <p>더헌터스는 브랜드 확장과 독자적인 커뮤니티 구축을 통해 새롭게 도약했습니다. 수년간 쌓아온 투자 데이터와 방대한 네트워크를 바탕으로 운영되며, 국내 최대 규모의 연합 동아리로 자리매김하고 있습니다.</p>
             </div>
             <div class="card">
-                <h3>Our Goal</h3>
-                <p>단순한 수익 추구를 넘어, 주식 투자의 기초 원리부터 거시 경제 분석까지 학습하며 올바른 투자 가치관을 정립하는 것을 목표로 합니다.</p>
+                <h3>지원자 유의사항</h3>
+                <p>온라인 활동을 병행하는 커뮤니티 특성상 타인을 침해하는 행위 방지를 위한 준수사항을 사전에 안내합니다. 세부 문구는 지원 단계에서 확인 후 동의할 수 있습니다.</p>
             </div>
-            <div class="card">
-                <h3>Our Network</h3>
-                <p>상경계열은 물론 공학, 의학, 예술 등 다양한 전공의 대학생들이 모여 다각적인 시각으로 시장을 분석하고 정보를 공유합니다.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="activity">
-        <h2 class="section-title">주요 활동</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>정기 교육 및 세미나</h3>
-                <p>매주 온라인 강의와 실시간 토론을 통해 투자 기초와 실전 매매 기법을 학습합니다. 초보자도 쉽게 따라올 수 있는 커리큘럼을 제공합니다.</p>
-            </div>
-            <div class="card">
-                <h3>모의투자대회 입상 전략</h3>
-                <p>키움증권 등 주요 증권사 대학생 모의투자대회 입상을 위한 체계적인 스터디를 운영하며, 실제 다수의 수상자를 배출한 전략을 공유합니다.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="faq">
-        <h2 class="section-title">자주 묻는 질문</h2>
-        <div class="grid">
             <div class="card">
                 <h3>투자 초보자도 가능한가요?</h3>
                 <p>네, 가능합니다. 더헌터스는 기초부터 차근차근 배우고 싶은 학생들을 위해 입문자용 교육 자료와 가이드를 상시 제공하고 있습니다.</p>
@@ -1153,30 +1170,39 @@
                 <p>더헌터스는 더 많은 학생들에게 기회를 제공하기 위해 별도의 면접과 가입비 없이 운영되는 자율적인 연합 동아리입니다.</p>
             </div>
         </div>
+        <a href="#contact" class="next-link">문의하기</a>
     </section>
 
-    <section class="contact-section" aria-labelledby="contactTitle">
-        <div class="contact-card">
-            <h2 id="contactTitle">문의</h2>
-            <p id="contactMessage">지원 및 활동 관련 문의는 아래 연락처로 부탁드립니다.</p>
-            <div class="contact-list">
+    <section id="contact" class="contact-section page-section" aria-labelledby="contactTitle">
+        <h2 class="section-title" id="contactTitle">문의</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h2>빠른 문의</h2>
+                <p id="contactMessage">지원 및 활동 관련 문의는 아래 연락처로 부탁드립니다.</p>
+                <div class="contact-list">
+                    <a class="contact-link" id="presidentPhoneLink" href="tel:010-2654-8333">
+                        <span class="contact-role">회장</span>
+                        <span class="contact-phone" id="presidentPhoneText">010-2654-8333</span>
+                    </a>
+                    <a class="contact-link" id="staffPhoneLink" href="tel:010-9496-5411">
+                        <span class="contact-role">운영진</span>
+                        <span class="contact-phone" id="staffPhoneText">010-9496-5411</span>
+                    </a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <h2>Q&A 게시판</h2>
+                <p>개인 문의는 비밀글로 남길 수 있으며, 조회 코드와 비밀번호를 입력한 본인만 확인할 수 있습니다.</p>
                 <a class="contact-link" href="qa.html">
-                    <span class="contact-role">게시판</span>
-                    <span class="contact-phone">Q&A 바로가기</span>
-                </a>
-                <a class="contact-link" id="presidentPhoneLink" href="tel:010-2654-8333">
-                    <span class="contact-role">회장</span>
-                    <span class="contact-phone" id="presidentPhoneText">010-2654-8333</span>
-                </a>
-                <a class="contact-link" id="staffPhoneLink" href="tel:010-9496-5411">
-                    <span class="contact-role">운영진</span>
-                    <span class="contact-phone" id="staffPhoneText">010-9496-5411</span>
+                    <span class="contact-role">비밀글</span>
+                    <span class="contact-phone">문의 남기기</span>
                 </a>
             </div>
         </div>
+        <a href="#apply" class="next-link">지원하기</a>
     </section>
 
-    <section id="apply">
+    <section id="apply" class="page-section">
         <h2 class="section-title">지원하기</h2>
         <div class="card form-container">
             <form id="joinForm" action="/api/apply" method="POST">
@@ -1242,7 +1268,7 @@
     <footer>
         <div class="footer-links">
             <a href="privacy.html">개인정보 처리방침</a>
-            <a href="#about">동아리 소개</a>
+            <a href="#guide">안내사항</a>
             <a href="mailto:contact@thehunters.co.kr">문의하기</a>
         </div>
         <p class="footer-contact">
@@ -1251,7 +1277,6 @@
             /
             <a href="tel:010-9496-5411" id="footerStaffPhone">운영진 010-9496-5411</a>
         </p>
-        <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true">Sound On</button>
         <p class="footer-copy">© 2026 THE HUNTERS. All rights reserved.</p>
     </footer>
 
@@ -1267,26 +1292,11 @@
         const marketUpdatedAt = document.getElementById("marketUpdatedAt");
         const marketSessionStatus = document.getElementById("marketSessionStatus");
         const noticesList = document.getElementById("noticesList");
-        const activitiesList = document.getElementById("activitiesList");
-        const soundToggle = document.getElementById("soundToggle");
-        const soundStorageKey = "soundEnabled";
+        const sectionDots = document.querySelectorAll(".section-dot");
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
         let tapAudioContext;
 
-        function soundEnabled() {
-            const stored = localStorage.getItem(soundStorageKey) ?? localStorage.getItem("theHuntersSoundEnabled");
-            return stored !== "false";
-        }
-
-        function updateSoundToggle() {
-            if (!soundToggle) return;
-            const enabled = soundEnabled();
-            soundToggle.textContent = enabled ? "Sound On" : "Sound Off";
-            soundToggle.setAttribute("aria-pressed", String(enabled));
-        }
-
         function playSoftTap() {
-            if (!soundEnabled()) return;
             try {
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
                 if (!AudioContext) return;
@@ -1300,7 +1310,7 @@
                 oscillator.frequency.setValueAtTime(420, now);
                 oscillator.frequency.exponentialRampToValueAtTime(220, now + 0.055);
                 gain.gain.setValueAtTime(0.0001, now);
-                gain.gain.exponentialRampToValueAtTime(0.045, now + 0.008);
+                gain.gain.exponentialRampToValueAtTime(0.036, now + 0.008);
                 gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.075);
 
                 oscillator.connect(gain);
@@ -1313,12 +1323,11 @@
         }
 
         function vibrateTap() {
-            if ("vibrate" in navigator) navigator.vibrate(10);
+            if ("vibrate" in navigator) navigator.vibrate(8);
         }
 
         function initMicroInteractions() {
-            const pressSelector = "button, .btn-main, .contact-link, .cms-item[href]";
-            const soundSelector = "#applyButton, #joinForm button[type='submit'], #agreeBtn, #soundToggle, .cms-item[href]";
+            const pressSelector = "button, .btn-main, .contact-link, .cms-item[href], .next-link, .section-dot";
 
             document.querySelectorAll(pressSelector).forEach((element) => {
                 element.classList.add("micro-pressable");
@@ -1338,18 +1347,29 @@
             });
 
             document.addEventListener("click", (event) => {
-                const target = event.target.closest(soundSelector);
+                const target = event.target.closest(pressSelector);
                 if (!target || target.disabled) return;
                 vibrateTap();
                 playSoftTap();
             });
+        }
 
-            soundToggle?.addEventListener("click", () => {
-                localStorage.setItem(soundStorageKey, String(!soundEnabled()));
-                updateSoundToggle();
-            });
+        function initSectionNavigation() {
+            if (!sectionDots.length) return;
+            const sections = [...sectionDots]
+                .map((dot) => document.querySelector(dot.getAttribute("href")))
+                .filter(Boolean);
+            const observer = new IntersectionObserver((entries) => {
+                const visible = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+                if (!visible) return;
+                sectionDots.forEach((dot) => {
+                    dot.classList.toggle("active", dot.getAttribute("href") === `#${visible.target.id}`);
+                });
+            }, { threshold: [0.42, 0.62] });
 
-            updateSoundToggle();
+            sections.forEach((section) => observer.observe(section));
         }
 
         function formatDuration(milliseconds) {
@@ -1539,11 +1559,9 @@
             const result = await response.json().catch(() => null);
             if (!response.ok || !result?.ok) {
                 renderContentList(noticesList, [], "등록된 공지가 없습니다.");
-                renderContentList(activitiesList, [], "등록된 활동기록이 없습니다.");
                 return;
             }
             renderContentList(noticesList, result.notices || [], "등록된 공지가 없습니다.");
-            renderContentList(activitiesList, result.activities || [], "등록된 활동기록이 없습니다.");
         }
 
         function formatUpdatedAt(value) {
@@ -1612,6 +1630,7 @@
         loadSiteSettings();
         loadNoticeContent();
         initMicroInteractions();
+        initSectionNavigation();
         initLogoTilt();
 
         // 데이터 조합 함수 (수정됨: 기수 입력 삭제, '기'만 표시)

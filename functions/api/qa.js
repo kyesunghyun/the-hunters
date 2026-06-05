@@ -24,44 +24,24 @@ async function sha256Hex(value) {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
-function maskName(name) {
-  const text = String(name || "익명").trim();
-  if (!text || text === "익명") return "익명";
-  if (text.length === 1) return `${text}*`;
-  return `${text[0]}${"*".repeat(Math.min(2, text.length - 1))}`;
+function createLookupCode() {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const bytes = new Uint8Array(6);
+  crypto.getRandomValues(bytes);
+  const code = [...bytes].map((byte) => alphabet[byte % alphabet.length]).join("");
+  return `HNTR-${code}`;
 }
 
-function publicQaItem(item) {
+function publicCreateResult(item) {
   return {
     id: item.id,
-    title: item.title,
+    lookupCode: item.lookupCode,
     date: item.date,
-    maskedName: maskName(item.name),
-    answered: Boolean(item.answered && item.answer),
-    secret: true,
-    visible: item.visible !== false,
   };
 }
 
-export async function onRequestGet({ env }) {
-  try {
-    const items = await readQaItems(env);
-    const publicItems = items
-      .filter((item) => item.visible !== false)
-      .sort((a, b) => String(b.createdAt || b.date || "").localeCompare(String(a.createdAt || a.date || "")))
-      .map(publicQaItem);
-
-    return jsonResponse({ ok: true, items: publicItems });
-  } catch (error) {
-    return jsonResponse(
-      {
-        ok: false,
-        error: "Q&A 목록을 불러오지 못했습니다.",
-        message: error instanceof Error ? error.message : String(error),
-      },
-      { status: 500 },
-    );
-  }
+export async function onRequestGet() {
+  return jsonResponse({ ok: true, items: [] });
 }
 
 export async function onRequestPost({ request, env }) {
@@ -78,10 +58,16 @@ export async function onRequestPost({ request, env }) {
     }
 
     const items = await readQaItems(env);
+    let lookupCode = createLookupCode();
+    while (items.some((entry) => entry.lookupCode === lookupCode)) {
+      lookupCode = createLookupCode();
+    }
+
     const salt = crypto.randomUUID();
     const now = new Date().toISOString();
     const item = {
       id: crypto.randomUUID(),
+      lookupCode,
       name,
       title,
       content,
@@ -100,7 +86,7 @@ export async function onRequestPost({ request, env }) {
     items.unshift(item);
     await writeQaItems(env, items);
 
-    return jsonResponse({ ok: true, item: publicQaItem(item) }, { status: 201 });
+    return jsonResponse({ ok: true, ...publicCreateResult(item) }, { status: 201 });
   } catch (error) {
     return jsonResponse(
       {
