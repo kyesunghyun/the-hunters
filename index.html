@@ -13,13 +13,17 @@
 
     <style>
         :root {
-            --primary-color: #9d4dff;
-            --primary-hover: #8b3dff;
-            --bg-dark: #0a0a0a;
-            --card-bg: rgba(255, 255, 255, 0.05);
+            --primary-color: #8f55ff;
+            --primary-hover: #a777ff;
+            --accent-gold: #d6b36a;
+            --bg-dark: #050505;
+            --panel-bg: rgba(14, 14, 18, 0.72);
+            --card-bg: rgba(255, 255, 255, 0.045);
             --text-main: #ffffff;
-            --text-dim: #bdbdbd;
-            --border-color: rgba(157, 77, 255, 0.25);
+            --text-dim: #b8b4c3;
+            --border-color: rgba(168, 119, 255, 0.26);
+            --gold-border: rgba(214, 179, 106, 0.28);
+            --shadow-purple: rgba(143, 85, 255, 0.28);
         }
 
         * {
@@ -31,10 +35,27 @@
         }
 
         body {
-            background: linear-gradient(180deg, #0a0a0a, #121212, #1b1033);
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(143, 85, 255, 0.22), transparent 32rem),
+                radial-gradient(circle at 85% 18%, rgba(214, 179, 106, 0.14), transparent 24rem),
+                linear-gradient(180deg, #050505 0%, #0a0a0d 46%, #110c1d 100%);
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background:
+                linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.72), transparent 82%);
         }
 
         /* Navigation */
@@ -42,8 +63,8 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(5, 5, 6, 0.76);
+            backdrop-filter: blur(18px);
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
         }
@@ -60,9 +81,10 @@
         .nav-logo {
             font-size: 20px;
             font-weight: 800;
-            color: var(--primary-color);
+            color: var(--text-main);
             text-decoration: none;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 22px rgba(143, 85, 255, 0.42);
         }
 
         .nav-links {
@@ -76,69 +98,175 @@
             font-size: 14px;
             font-weight: 500;
             transition: 0.3s;
+            opacity: 0.82;
         }
 
         .nav-links a:hover {
             color: var(--primary-color);
+            opacity: 1;
         }
 
         /* Hero Section */
         header {
-            padding: 150px 20px 80px;
+            position: relative;
+            padding: 118px 20px 72px;
             text-align: center;
-            max-width: 900px;
+            max-width: 1120px;
             margin: 0 auto;
+            min-height: 92vh;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            width: min(72vw, 760px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(143, 85, 255, 0.18), transparent 68%);
+            filter: blur(6px);
+            animation: pulseGlow 5.6s ease-in-out infinite;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: '';
+            width: 44px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold));
+        }
+
+        .eyebrow::after {
+            background: linear-gradient(90deg, var(--accent-gold), transparent);
         }
 
         .hero-logo {
-            width: 150px;
-            margin-bottom: 30px;
+            width: min(62vw, 420px);
+            max-width: 420px;
+            margin: 0 auto 22px;
+            display: block;
+            border-radius: 50%;
+            filter:
+                drop-shadow(0 26px 48px rgba(0, 0, 0, 0.56))
+                drop-shadow(0 0 34px rgba(143, 85, 255, 0.28));
+            animation: emblemFloat 7s ease-in-out infinite;
         }
 
         .title {
-            font-size: 52px;
+            font-size: clamp(44px, 8vw, 86px);
             font-weight: 800;
-            background: linear-gradient(to right, #ffffff, #9d4dff);
+            line-height: 0.94;
+            background: linear-gradient(115deg, #ffffff 0%, #d6b36a 38%, #a777ff 78%, #ffffff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
+            letter-spacing: 0;
+            text-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
         }
 
         .subtitle {
-            font-size: 18px;
+            font-size: clamp(16px, 2vw, 20px);
             color: var(--text-dim);
-            max-width: 600px;
-            margin: 0 auto 40px;
+            max-width: 680px;
+            margin: 0 auto 34px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1px;
+            max-width: 720px;
+            margin: 0 auto 34px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .hero-stat {
+            padding: 18px 14px;
+            background: rgba(7, 7, 10, 0.78);
+            backdrop-filter: blur(14px);
+        }
+
+        .hero-stat strong {
+            display: block;
+            color: #fff;
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .hero-stat span {
+            display: block;
+            margin-top: 8px;
+            color: var(--text-dim);
+            font-size: 12px;
         }
 
         .btn-main {
             display: inline-block;
-            background: var(--primary-color);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-color), #5e38c9);
             color: white;
-            padding: 15px 40px;
-            border-radius: 30px;
+            padding: 16px 42px;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 999px;
             text-decoration: none;
             font-weight: 700;
+            box-shadow: 0 16px 34px rgba(94, 56, 201, 0.34);
             transition: 0.3s;
+        }
+
+        .btn-main::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            transform: translateX(-110%) skewX(-18deg);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent);
+            transition: transform 0.6s;
         }
 
         .btn-main:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(157, 77, 255, 0.3);
+            box-shadow: 0 20px 42px rgba(143, 85, 255, 0.42);
+        }
+
+        .btn-main:hover::before {
+            transform: translateX(110%) skewX(-18deg);
         }
 
         /* Sections */
         section {
-            padding: 80px 20px;
+            padding: 86px 20px;
             max-width: 1100px;
             margin: 0 auto;
         }
 
         .section-title {
-            font-size: 32px;
-            margin-bottom: 40px;
+            font-size: clamp(28px, 4vw, 42px);
+            margin-bottom: 38px;
             text-align: center;
             position: relative;
+            letter-spacing: 0;
         }
 
         .section-title::after {
@@ -146,9 +274,10 @@
             display: block;
             width: 50px;
             height: 4px;
-            background: var(--primary-color);
+            background: linear-gradient(90deg, var(--accent-gold), var(--primary-color));
             margin: 15px auto 0;
             border-radius: 2px;
+            box-shadow: 0 0 24px rgba(143, 85, 255, 0.55);
         }
 
         .grid {
@@ -158,26 +287,48 @@
         }
 
         .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)),
+                var(--card-bg);
+            backdrop-filter: blur(18px);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
+            border-radius: 8px;
             padding: 35px;
-            transition: 0.3s;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 20px 52px rgba(0,0,0,0.25);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(120deg, transparent 0%, rgba(214, 179, 106, 0.08) 35%, rgba(143, 85, 255, 0.1) 62%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .card:hover {
-            border-color: var(--primary-color);
+            border-color: rgba(214, 179, 106, 0.45);
             transform: translateY(-5px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 26px 70px rgba(0,0,0,0.34), 0 0 34px rgba(143, 85, 255, 0.12);
+        }
+
+        .card:hover::before {
+            opacity: 1;
         }
 
         .card h3 {
-            color: var(--primary-color);
+            position: relative;
+            color: var(--accent-gold);
             margin-bottom: 15px;
             font-size: 22px;
         }
 
         .card p {
+            position: relative;
             color: var(--text-dim);
             font-size: 16px;
             line-height: 1.7;
@@ -187,6 +338,7 @@
         .form-container {
             max-width: 650px;
             margin: 0 auto;
+            border-color: var(--gold-border);
         }
 
         label {
@@ -199,12 +351,20 @@
         input, textarea {
             width: 100%;
             padding: 15px;
-            border: none;
-            border-radius: 12px;
-            background: #232323;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.075);
             color: white;
             font-size: 15px;
             margin-bottom: 10px;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(214, 179, 106, 0.5);
+            background: rgba(255,255,255,0.095);
+            box-shadow: 0 0 0 3px rgba(143, 85, 255, 0.16);
         }
 
         .gender-group {
@@ -231,13 +391,14 @@
             margin-top: 30px;
             padding: 18px;
             border: none;
-            border-radius: 14px;
-            background: var(--primary-color);
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary-color), #3a256f);
             color: white;
             font-size: 18px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.2s;
+            box-shadow: 0 14px 30px rgba(143, 85, 255, 0.24);
         }
 
         button[type="submit"]:hover {
@@ -260,14 +421,15 @@
         }
 
         .modal-content {
-            background: #1a1a1a;
+            background: linear-gradient(145deg, #17171b, #0c0c0f);
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 8px;
             max-width: 500px;
             width: 100%;
-            border: 1px solid var(--primary-color);
+            border: 1px solid var(--gold-border);
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 30px 90px rgba(0,0,0,0.5);
         }
 
         .modal-text {
@@ -326,8 +488,28 @@
         }
 
         @media (max-width: 768px) {
-            .title { font-size: 38px; }
+            header {
+                min-height: auto;
+                padding-top: 116px;
+            }
+            .title { font-size: 42px; }
             .nav-links { display: none; }
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 26px;
+            }
+        }
+
+        @keyframes emblemFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.015); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.52; transform: scale(0.94); }
+            50% { opacity: 0.9; transform: scale(1.04); }
         }
     </style>
 </head>
@@ -346,13 +528,30 @@
     </nav>
 
     <header>
-        <img src="logo.png" alt="THE HUNTERS" class="hero-logo">
-        <h1 class="title">THE HUNTERS</h1>
-        <p class="subtitle">
-            전국 100여 개 대학교, 1,500명 이상의 회원이 함께하는<br>
-            대한민국 최대 규모의 대학생 주식투자 연합동아리입니다.
-        </p>
-        <a href="#apply" class="btn-main">지금 지원하기</a>
+        <div class="hero-inner">
+            <div class="eyebrow">Premium Investment Network</div>
+            <img src="logo2.png" alt="THE HUNTERS" class="hero-logo">
+            <h1 class="title">THE HUNTERS</h1>
+            <p class="subtitle">
+                전국 100여 개 대학교, 1,500명 이상의 회원이 함께하는<br>
+                대한민국 최대 규모의 대학생 주식투자 연합동아리입니다.
+            </p>
+            <div class="hero-stats" aria-label="더헌터스 핵심 지표">
+                <div class="hero-stat">
+                    <strong>100+</strong>
+                    <span>참여 대학교</span>
+                </div>
+                <div class="hero-stat">
+                    <strong>1,500+</strong>
+                    <span>누적 네트워크</span>
+                </div>
+                <div class="hero-stat">
+                    <strong>Stock</strong>
+                    <span>투자 교육 및 스터디</span>
+                </div>
+            </div>
+            <a href="#apply" class="btn-main">지금 지원하기</a>
+        </div>
     </header>
 
     <section id="about">
