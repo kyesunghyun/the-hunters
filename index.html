@@ -372,6 +372,15 @@
             text-align: right;
         }
 
+        .market-status {
+            padding: 22px;
+            border: 1px solid rgba(255,255,255,0.095);
+            border-radius: 8px;
+            background: rgba(10, 10, 13, 0.64);
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
         .market-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -429,6 +438,12 @@
             font-size: 12px;
         }
 
+        .market-source {
+            margin-top: 12px;
+            color: rgba(255,255,255,0.42);
+            font-size: 11px;
+        }
+
         .sparkline {
             width: 100%;
             height: 34px;
@@ -441,6 +456,14 @@
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
+        }
+
+        .trend-unavailable {
+            margin-top: 14px;
+            color: rgba(255,255,255,0.36);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
 
         .market-insight {
@@ -701,9 +724,11 @@
                 <div class="market-kicker">Market Snapshot</div>
                 <h2 id="marketSnapshotTitle">오늘의 시장 흐름</h2>
             </div>
-            <p class="market-note">참고용 스냅샷</p>
+            <p class="market-note" id="marketUpdatedAt">불러오는 중</p>
         </div>
-        <div class="market-grid" id="marketGrid" aria-live="polite"></div>
+        <div class="market-grid" id="marketGrid" aria-live="polite">
+            <div class="market-status">시장 정보를 불러오는 중입니다.</div>
+        </div>
     </section>
 
     <section id="about">
@@ -836,45 +861,78 @@
         const legalAgreementInput = document.getElementById("legalAgreementInput");
         const summaryInput = document.getElementById("summaryInput");
         const marketGrid = document.getElementById("marketGrid");
+        const marketUpdatedAt = document.getElementById("marketUpdatedAt");
 
-        const fallbackMarketData = [
-            { name: "KOSPI", value: "2,742.18", change: "+0.42%", tone: "up", meta: "대형주 중심 완만한 매수세", spark: "M2 26 L12 22 L22 24 L32 18 L42 20 L52 14 L62 16 L72 10 L82 12 L92 8" },
-            { name: "KOSDAQ", value: "873.64", change: "-0.18%", tone: "down", meta: "성장주 일부 차익 실현", spark: "M2 10 L12 12 L22 9 L32 15 L42 14 L52 19 L62 17 L72 23 L82 21 L92 25" },
-            { name: "S&P 500", value: "5,347.92", change: "+0.31%", tone: "up", meta: "기술주 실적 기대 반영", spark: "M2 24 L12 21 L22 22 L32 18 L42 16 L52 17 L62 12 L72 10 L82 11 L92 7" },
-            { name: "NASDAQ", value: "17,124.80", change: "+0.58%", tone: "up", meta: "AI·반도체 섹터 견조", spark: "M2 28 L12 25 L22 24 L32 20 L42 22 L52 16 L62 14 L72 13 L82 8 L92 6" },
-            { name: "USD/KRW", value: "1,372.40", change: "+0.09%", tone: "neutral", meta: "달러 강세 제한적", spark: "M2 17 L12 16 L22 18 L32 15 L42 17 L52 14 L62 15 L72 13 L82 14 L92 12" },
-            { name: "Market Insight", value: "Selective Risk-On", change: "Neutral", tone: "neutral", meta: "지수보다 섹터별 온도 차가 큰 장세입니다. 실적 가시성과 밸류에이션 부담을 함께 점검하는 접근이 유효합니다.", spark: "", wide: true },
-        ];
-
-        async function getMarketSnapshot() {
-            // Later, replace this fallback with a Pages Function that reads API keys from environment variables.
-            return fallbackMarketData;
+        function escapeHtml(value) {
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         }
 
-        function renderMarketSnapshot(items) {
+        function formatUpdatedAt(value) {
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return "업데이트 시간 확인 불가";
+            return `마지막 업데이트: ${date.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })}`;
+        }
+
+        async function getMarketSnapshot() {
+            const response = await fetch("/api/market", {
+                headers: { "Accept": "application/json" },
+            });
+            const result = await response.json().catch(() => null);
+
+            if (!response.ok || !result?.ok || !Array.isArray(result.items)) {
+                throw new Error(result?.error || "시장 정보를 불러오지 못했습니다.");
+            }
+
+            return result;
+        }
+
+        function renderMarketSnapshot(result) {
             if (!marketGrid) return;
+            const items = result.items;
+
+            if (marketUpdatedAt) {
+                marketUpdatedAt.textContent = formatUpdatedAt(result.updatedAt);
+            }
 
             marketGrid.innerHTML = items.map((item) => {
-                const sparkline = item.spark
-                    ? `<svg class="sparkline" viewBox="0 0 94 32" preserveAspectRatio="none" aria-hidden="true"><path d="${item.spark}"></path></svg>`
-                    : "";
+                const trend = Array.isArray(item.trend) && item.trend.length > 1
+                    ? `<svg class="sparkline" viewBox="0 0 94 32" preserveAspectRatio="none" aria-hidden="true"><path d="${escapeHtml(item.trend)}"></path></svg>`
+                    : `<div class="trend-unavailable">trend unavailable</div>`;
                 const insightClass = item.name === "Market Insight" ? " market-insight" : "";
+                const changeText = item.changePercent
+                    ? `${item.change || ""} (${item.changePercent})`
+                    : item.change || "변동 정보 없음";
 
                 return `
                     <article class="market-card${item.wide ? " wide" : ""}">
                         <div class="market-top">
-                            <span class="market-name">${item.name}</span>
-                            <span class="market-change ${item.tone}">${item.change}</span>
+                            <span class="market-name">${escapeHtml(item.name)}</span>
+                            <span class="market-change ${escapeHtml(item.tone || "neutral")}">${escapeHtml(changeText)}</span>
                         </div>
-                        <div class="market-value">${item.value}</div>
-                        <div class="market-meta${insightClass}">${item.meta}</div>
-                        ${sparkline}
+                        <div class="market-value">${escapeHtml(item.value)}</div>
+                        <div class="market-meta${insightClass}">${escapeHtml(item.meta)}</div>
+                        <div class="market-source">Source: ${escapeHtml(item.source || "External API")}</div>
+                        ${trend}
                     </article>
                 `;
             }).join("");
         }
 
-        getMarketSnapshot().then(renderMarketSnapshot);
+        function renderMarketError(error) {
+            if (marketUpdatedAt) {
+                marketUpdatedAt.textContent = "업데이트 지연";
+            }
+            if (marketGrid) {
+                marketGrid.innerHTML = `<div class="market-status">${escapeHtml(error.message || "실시간 정보를 불러오지 못했습니다.")}</div>`;
+            }
+        }
+
+        getMarketSnapshot().then(renderMarketSnapshot).catch(renderMarketError);
 
         // 데이터 조합 함수 (수정됨: 기수 입력 삭제, '기'만 표시)
         function generateSummary() {
