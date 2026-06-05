@@ -1,4 +1,4 @@
-const FALLBACK_GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTAD78O1Zbd8o5gEoGUbTzYGFIUuWnmtcyExe5rR-uXjzaoBb68MBGraz10ouUsD9Q3g/exec";
+const FALLBACK_GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFZGV2zj4ZQgIOtFWcb5RRsCEwccnCpjKw2zOT7kmpEo2LBRe2DmQjuPxOJqkg3demQ/exec";
 
 function jsonResponse(body, init = {}) {
   return new Response(JSON.stringify(body), {
