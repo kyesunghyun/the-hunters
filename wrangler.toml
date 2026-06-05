@@ -1,3 +1,7 @@
 name = "the-hunters"
 compatibility_date = "2026-06-05"
 pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "THE_HUNTERS_CMS"
+id = "0194bd1849c74e02bd11ccf5428f7143"
