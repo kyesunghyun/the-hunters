@@ -164,7 +164,7 @@
             width: min(72vw, 520px);
             max-width: 520px;
             margin: 0 auto 22px;
-            perspective: 900px;
+            perspective: 760px;
             transform-style: preserve-3d;
         }
 
@@ -188,7 +188,7 @@
                 drop-shadow(0 0 10px rgba(143, 85, 255, 0.10));
             transform-origin: 50% 50%;
             transform-style: preserve-3d;
-            animation: premiumTurn 14s ease-in-out infinite;
+            animation: premiumTurn 16s ease-in-out infinite;
             will-change: transform;
         }
 
@@ -664,8 +664,8 @@
         }
 
         @keyframes premiumTurn {
-            0%, 100% { transform: rotateY(-11deg) rotateX(1deg) translateZ(0); }
-            50% { transform: rotateY(11deg) rotateX(-0.6deg) translateZ(12px); }
+            0%, 100% { transform: rotateY(-45deg) rotateX(1deg) translateZ(0); }
+            50% { transform: rotateY(45deg) rotateX(-0.6deg) translateZ(18px); }
         }
 
         @media (prefers-reduced-motion: reduce) {
