@@ -532,47 +532,50 @@
         }
 
         .contact-section {
-            max-width: 900px;
-            padding-top: 42px;
+            max-width: 760px;
+            padding-top: 24px;
+            padding-bottom: 18px;
         }
 
         .contact-card {
-            border: 1px solid rgba(255,255,255,0.11);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            border: 1px solid rgba(255,255,255,0.085);
             border-radius: 8px;
-            padding: 28px;
-            background: rgba(10, 10, 13, 0.66);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.045);
+            padding: 14px 16px;
+            background: rgba(10, 10, 13, 0.46);
         }
 
         .contact-card h2 {
-            font-size: clamp(24px, 4vw, 34px);
-            margin-bottom: 10px;
+            font-size: 15px;
+            margin-bottom: 2px;
         }
 
         .contact-card p {
             color: var(--text-dim);
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 12px;
+            line-height: 1.5;
         }
 
         .contact-list {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
-            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 8px;
         }
 
         .contact-link {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            gap: 16px;
-            padding: 16px;
-            border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 8px;
+            gap: 8px;
+            padding: 7px 10px;
+            border: 1px solid rgba(255,255,255,0.075);
+            border-radius: 999px;
             color: #fff;
             text-decoration: none;
-            background: rgba(255,255,255,0.035);
+            background: rgba(255,255,255,0.025);
             transition: border-color 0.2s, background 0.2s;
         }
 
@@ -583,11 +586,11 @@
 
         .contact-role {
             color: var(--text-dim);
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .contact-phone {
-            font-size: 15px;
+            font-size: 12px;
             font-weight: 800;
             letter-spacing: 0;
             white-space: nowrap;
@@ -795,12 +798,12 @@
                 animation-duration: 34s;
             }
             .contact-list {
-                grid-template-columns: 1fr;
+                justify-content: flex-start;
             }
-            .contact-link {
+            .contact-card {
                 align-items: flex-start;
                 flex-direction: column;
-                gap: 6px;
+                gap: 12px;
             }
             .card {
                 padding: 26px;
