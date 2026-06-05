@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>지원하기 | THE HUNTERS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap" rel="stylesheet">
     <style>
         :root{--primary:#8f55ff;--primary-hover:#9a68ff;--gold:#bfa469;--text:#fff;--dim:#b6b3bd;--border:rgba(255,255,255,.12);--gold-border:rgba(191,164,105,.22)}
         *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -50,5 +53,6 @@
         async function submitFormData(data){const button=form.querySelector('button[type="submit"]'),original=button.textContent;button.disabled=true;button.textContent="보내는 중...";try{const response=await fetch(form.action,{method:"POST",body:data});if(!response.ok){const result=await response.json().catch(()=>null);throw new Error(result?.error||"전송 실패")}alert(`주식투자연합동아리 더헌터스 지원이 완료되었습니다.\n\n인원이 다 차면 카카오톡 단톡방에서 오티 진행합니다.\n\n최근 금융사와의 협업을 위해 동아리명을 기존 키움헌터스에서 더헌터스로 변경한 점 참고 부탁드립니다!\n\n기다려주셔서 감사합니다`);form.reset();legalAgreementInput.value="해당없음"}catch(e){alert("전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.")}finally{button.disabled=false;button.textContent=original}}
         document.addEventListener("click",e=>{if(e.target.closest("a,button")&&"vibrate"in navigator)navigator.vibrate(8)});
     </script>
+    <script src="header-scroll.js"></script>
 </body>
 </html>

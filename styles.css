@@ -22,6 +22,8 @@
     --text: var(--foreground);
     --dim: var(--muted-foreground);
     --panel: var(--card);
+    --font-display: "Grandiflora One", serif;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     color-scheme: dark;
 }
 
@@ -34,6 +36,7 @@ html {
 }
 
 body {
+    font-family: var(--font-sans);
     background:
         linear-gradient(180deg, rgba(24, 24, 27, 0.7), rgba(9, 9, 11, 0) 260px),
         var(--background) !important;
@@ -50,10 +53,22 @@ a {
     text-underline-offset: 4px;
 }
 
-nav {
-    background: rgba(9, 9, 11, 0.82) !important;
-    border-bottom: 1px solid var(--border) !important;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
+body > nav:not(.tabs) {
+    position: sticky !important;
+    top: 0;
+    z-index: 30;
+    background: rgba(5, 5, 10, 0) !important;
+    border-bottom: 1px solid transparent !important;
+    box-shadow: none;
+    backdrop-filter: blur(0);
+    transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease, backdrop-filter 220ms ease;
+}
+
+body > nav:not(.tabs).is-scrolled {
+    background: rgba(5, 5, 10, 0.82) !important;
+    border-bottom-color: rgba(63, 63, 70, 0.72) !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(16px);
 }
 
 .nav-inner {
@@ -64,9 +79,10 @@ nav {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    font-size: 14px !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.08em !important;
+    font-family: var(--font-display);
+    font-size: 22px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.02em !important;
 }
 
 .brand::before {
@@ -89,19 +105,23 @@ nav {
     display: inline-flex;
     align-items: center;
     min-height: 36px;
-    border-radius: var(--radius);
+    border-radius: 0;
     padding: 0 10px;
     color: var(--muted-foreground) !important;
     font-size: 14px !important;
-    font-weight: 600;
-    transition: background 160ms ease, color 160ms ease;
+    font-weight: 500;
+    text-decoration-color: transparent;
+    transition: opacity 160ms ease, color 160ms ease, text-decoration-color 160ms ease;
 }
 
 .links a:hover,
 .nav-links a:hover,
 .back:hover {
-    background: var(--accent);
+    background: transparent;
     color: var(--accent-foreground) !important;
+    opacity: 0.82;
+    text-decoration: underline;
+    text-decoration-color: currentColor;
 }
 
 main {
@@ -112,6 +132,7 @@ main {
 .kicker,
 .eyebrow,
 .ticker-label {
+    font-family: var(--font-sans);
     color: var(--gold) !important;
     font-size: 12px !important;
     font-weight: 700 !important;
@@ -119,8 +140,26 @@ main {
 }
 
 h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
     color: var(--foreground);
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
+}
+
+h2,
+.card h3,
+.item h3,
+.panel h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0;
+}
+
+.subtitle,
+.lead {
+    font-family: var(--font-display);
+    font-size: clamp(19px, 2.4vw, 26px) !important;
+    line-height: 1.62 !important;
 }
 
 .lead,
@@ -186,8 +225,66 @@ button:hover,
     background: rgba(63, 63, 70, 0.92) !important;
 }
 
-.btn.primary,
-.primary,
+.btn,
+.pill,
+.privacy-page .back-link {
+    min-height: auto;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--foreground) !important;
+    padding: 0 !important;
+    box-shadow: none;
+    font-weight: 600 !important;
+    text-decoration-color: transparent;
+    transition: opacity 160ms ease, transform 100ms ease, text-decoration-color 160ms ease;
+}
+
+.btn:hover,
+.pill:hover,
+.privacy-page .back-link:hover {
+    background: transparent !important;
+    opacity: 0.72;
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+}
+
+button.primary,
+.tab.active {
+    border-color: transparent !important;
+    background: var(--primary) !important;
+    color: var(--primary-foreground) !important;
+}
+
+.actions .btn.primary[href="apply.html"],
+#applyButton {
+    min-height: 42px;
+    border: 1px solid rgba(168, 85, 247, 0.42) !important;
+    border-radius: var(--radius) !important;
+    background: rgba(168, 85, 247, 0.18) !important;
+    color: var(--primary-foreground) !important;
+    padding: 0 16px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    text-decoration: none;
+}
+
+.actions .btn.primary[href="apply.html"]:hover,
+#applyButton:hover {
+    background: rgba(168, 85, 247, 0.26) !important;
+    opacity: 1;
+}
+
+.tab,
+button,
+button.primary {
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    background: var(--secondary) !important;
+    color: var(--secondary-foreground) !important;
+    padding: 0 14px !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16);
+}
+
 button.primary,
 .tab.active {
     border-color: transparent !important;
@@ -204,6 +301,7 @@ button.danger {
 input,
 textarea,
 select {
+    font-family: var(--font-sans);
     border: 1px solid var(--input) !important;
     border-radius: var(--radius) !important;
     background: rgba(9, 9, 11, 0.72) !important;
@@ -246,6 +344,7 @@ label {
 .hero-stat strong,
 .result-title,
 .item-title {
+    font-family: var(--font-sans);
     color: var(--foreground) !important;
 }
 
@@ -304,10 +403,10 @@ label {
     align-items: center;
     min-height: 36px;
     margin-bottom: 18px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0 12px;
-    background: var(--secondary);
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
     color: var(--secondary-foreground);
     text-decoration: none;
 }
