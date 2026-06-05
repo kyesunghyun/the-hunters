@@ -17,6 +17,7 @@
 - 연락처: 문의 안내 문구, 회장 연락처, 운영진 연락처
 - 뉴스티커: 문구, 공개여부, 순서
 - 메인문구: 메인 제목, 서브 카피, 지원 버튼 문구, 지원자 유의사항 문구
+- Q&A 관리: 질문 확인, 답변 작성/수정, 공개여부 변경, 삭제
 
 Cloudflare 설정:
 
@@ -37,6 +38,7 @@ KV keys:
 - `activities`
 - `siteSettings`
 - `tickerItems`
+- `qaItems`
 
 배포 후 테스트:
 
@@ -47,6 +49,31 @@ KV keys:
 5. 공개 API 확인:
    - `/api/site-settings`
    - `/api/notices`
+
+### Q&A board
+
+공개 Q&A 게시판은 아래 경로에서만 질문 작성폼을 제공합니다.
+
+- `/qa.html`
+
+홈페이지에는 Q&A 게시판으로 이동하는 링크만 노출하고, 질문 작성폼은 메인 화면에 직접 노출하지 않습니다.
+
+비밀글 구조:
+
+- 질문 등록 시 이름 또는 닉네임, 비밀번호, 제목, 질문 내용, 개인정보 동의를 받습니다.
+- 질문 비밀번호는 평문 저장하지 않고 salt와 함께 SHA-256 해시로 저장합니다.
+- 공개 목록 API `/api/qa`는 제목, 날짜, 마스킹된 이름, 답변상태, 비밀글 여부만 반환합니다.
+- 질문 내용과 답변은 `/api/qa/:id/verify`에서 비밀번호가 맞을 때만 반환합니다.
+- 관리자 답변은 `/admin-secret.html`의 `Q&A 관리` 탭에서 작성합니다.
+
+Q&A APIs:
+
+- `GET /api/qa`: 공개 질문 목록
+- `POST /api/qa`: 새 질문 등록
+- `POST /api/qa/:id/verify`: 작성자 비밀번호 검증 후 상세 반환
+- `GET /api/admin/qa`: 관리자 전체 질문 조회
+- `PUT /api/admin/qa/:id`: 답변/공개여부/답변상태 수정
+- `DELETE /api/admin/qa/:id`: 질문 삭제
 
 ### `/api/apply`
 
