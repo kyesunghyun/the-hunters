@@ -472,6 +472,127 @@
             line-height: 1.7;
         }
 
+        .ticker-section {
+            max-width: 1100px;
+            padding-top: 18px;
+            padding-bottom: 48px;
+        }
+
+        .ticker-shell {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+            align-items: center;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            background: rgba(7, 7, 10, 0.72);
+        }
+
+        .ticker-label {
+            height: 100%;
+            padding: 16px 18px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            color: #f3f0f8;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            background: rgba(143, 85, 255, 0.08);
+        }
+
+        .ticker-window {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .ticker-track {
+            display: inline-flex;
+            gap: 34px;
+            min-width: max-content;
+            padding: 0 20px;
+            animation: tickerMove 42s linear infinite;
+        }
+
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        .ticker-item::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            opacity: 0.7;
+        }
+
+        .contact-section {
+            max-width: 900px;
+            padding-top: 42px;
+        }
+
+        .contact-card {
+            border: 1px solid rgba(255,255,255,0.11);
+            border-radius: 8px;
+            padding: 28px;
+            background: rgba(10, 10, 13, 0.66);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.045);
+        }
+
+        .contact-card h2 {
+            font-size: clamp(24px, 4vw, 34px);
+            margin-bottom: 10px;
+        }
+
+        .contact-card p {
+            color: var(--text-dim);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .contact-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .contact-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            background: rgba(255,255,255,0.035);
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .contact-link:hover {
+            border-color: rgba(143, 85, 255, 0.34);
+            background: rgba(143, 85, 255, 0.08);
+        }
+
+        .contact-role {
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        .contact-phone {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0;
+            white-space: nowrap;
+        }
+
         /* Form Section */
         .form-container {
             max-width: 650px;
@@ -625,6 +746,17 @@
             font-size: 13px;
         }
 
+        .footer-contact {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .footer-contact a {
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
         @media (max-width: 768px) {
             header {
                 min-height: auto;
@@ -651,6 +783,25 @@
             .market-card.wide {
                 grid-column: span 1;
             }
+            .ticker-shell {
+                grid-template-columns: 1fr;
+            }
+            .ticker-label {
+                border-right: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .ticker-track {
+                padding: 14px 18px;
+                animation-duration: 34s;
+            }
+            .contact-list {
+                grid-template-columns: 1fr;
+            }
+            .contact-link {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+            }
             .card {
                 padding: 26px;
             }
@@ -668,8 +819,14 @@
             50% { transform: rotateY(11deg) rotateX(-0.6deg) translateZ(12px); }
         }
 
+        @keyframes tickerMove {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
         @media (prefers-reduced-motion: reduce) {
-            .hero-logo {
+            .hero-logo,
+            .ticker-track {
                 animation: none;
             }
         }
@@ -731,6 +888,26 @@
         </div>
     </section>
 
+    <section class="ticker-section" aria-label="THE HUNTERS Market Note">
+        <div class="ticker-shell">
+            <div class="ticker-label">THE HUNTERS Market Note</div>
+            <div class="ticker-window">
+                <div class="ticker-track">
+                    <span class="ticker-item">KOSPI 시장 흐름 업데이트</span>
+                    <span class="ticker-item">NASDAQ 변동성 확대</span>
+                    <span class="ticker-item">USD/KRW 환율 체크</span>
+                    <span class="ticker-item">반도체·AI 섹터 관심</span>
+                    <span class="ticker-item">글로벌 증시 주요 이슈 모니터링</span>
+                    <span class="ticker-item">KOSPI 시장 흐름 업데이트</span>
+                    <span class="ticker-item">NASDAQ 변동성 확대</span>
+                    <span class="ticker-item">USD/KRW 환율 체크</span>
+                    <span class="ticker-item">반도체·AI 섹터 관심</span>
+                    <span class="ticker-item">글로벌 증시 주요 이슈 모니터링</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="about">
         <h2 class="section-title">동아리 소개</h2>
         <div class="grid">
@@ -777,6 +954,23 @@
             <div class="card">
                 <h3>면접이나 가입비가 있나요?</h3>
                 <p>더헌터스는 더 많은 학생들에게 기회를 제공하기 위해 별도의 면접과 가입비 없이 운영되는 자율적인 연합 동아리입니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" aria-labelledby="contactTitle">
+        <div class="contact-card">
+            <h2 id="contactTitle">문의</h2>
+            <p>지원 및 활동 관련 문의는 아래 연락처로 부탁드립니다.</p>
+            <div class="contact-list">
+                <a class="contact-link" href="tel:010-2654-8333">
+                    <span class="contact-role">회장</span>
+                    <span class="contact-phone">010-2654-8333</span>
+                </a>
+                <a class="contact-link" href="tel:010-9496-5411">
+                    <span class="contact-role">운영진</span>
+                    <span class="contact-phone">010-9496-5411</span>
+                </a>
             </div>
         </div>
     </section>
@@ -850,6 +1044,12 @@
             <a href="#about">동아리 소개</a>
             <a href="mailto:contact@thehunters.co.kr">문의하기</a>
         </div>
+        <p class="footer-contact">
+            문의:
+            <a href="tel:010-2654-8333">회장 010-2654-8333</a>
+            /
+            <a href="tel:010-9496-5411">운영진 010-9496-5411</a>
+        </p>
         <p class="footer-copy">© 2026 THE HUNTERS. All rights reserved.</p>
     </footer>
 
