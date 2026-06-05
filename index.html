@@ -44,6 +44,7 @@
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
+            animation: pageFadeIn 150ms ease-out both;
         }
 
         body::before {
@@ -55,6 +56,20 @@
             background:
                 radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.035), transparent 34rem),
                 linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.42) 100%);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.028;
+            background-image:
+                radial-gradient(circle at 18% 24%, rgba(255,255,255,0.95) 0 0.7px, transparent 0.8px),
+                radial-gradient(circle at 72% 64%, rgba(255,255,255,0.72) 0 0.6px, transparent 0.7px);
+            background-size: 5px 5px, 7px 7px;
+            mix-blend-mode: soft-light;
         }
 
         /* Navigation */
@@ -166,6 +181,8 @@
             margin: 0 auto 22px;
             perspective: 900px;
             transform-style: preserve-3d;
+            transition: transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            will-change: transform;
         }
 
         .emblem-scene::after {
@@ -383,6 +400,35 @@
             text-align: right;
         }
 
+        .market-session {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            color: var(--text-dim);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        .market-session-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.34);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.055);
+        }
+
+        .market-session.open {
+            color: var(--positive);
+        }
+
+        .market-session.open .market-session-dot {
+            background: var(--positive);
+            box-shadow: 0 0 0 3px rgba(123, 216, 164, 0.11);
+        }
+
         .market-status {
             padding: 22px;
             border: 1px solid rgba(255,255,255,0.095);
@@ -581,6 +627,20 @@
         .cms-pin {
             color: var(--accent-gold);
             font-weight: 800;
+        }
+
+        .cms-badge {
+            display: inline-flex;
+            align-items: center;
+            min-height: 20px;
+            padding: 2px 7px;
+            border: 1px solid rgba(191, 164, 105, 0.24);
+            border-radius: 999px;
+            color: #d8c899;
+            background: rgba(191, 164, 105, 0.08);
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 8px;
         }
 
         .cms-item h3 {
@@ -931,10 +991,23 @@
             to { transform: translateX(-50%); }
         }
 
+        @keyframes pageFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
+            body {
+                animation: none;
+            }
+
             .hero-logo,
             .ticker-track {
                 animation: none;
+            }
+
+            .emblem-scene {
+                transition: none;
             }
         }
     </style>
@@ -989,7 +1062,13 @@
                 <div class="market-kicker">Market Snapshot</div>
                 <h2 id="marketSnapshotTitle">오늘의 시장 흐름</h2>
             </div>
-            <p class="market-note" id="marketUpdatedAt">불러오는 중</p>
+            <div class="market-note">
+                <p id="marketUpdatedAt">불러오는 중</p>
+                <p class="market-session" id="marketSessionStatus">
+                    <span class="market-session-dot"></span>
+                    <span>MARKET CLOSED</span>
+                </p>
+            </div>
         </div>
         <div class="market-grid" id="marketGrid" aria-live="polite">
             <div class="market-status">시장 정보를 불러오는 중입니다.</div>
@@ -1183,17 +1262,20 @@
         const disagreeBtn = document.getElementById("disagreeBtn");
         const legalAgreementInput = document.getElementById("legalAgreementInput");
         const summaryInput = document.getElementById("summaryInput");
+        const emblemScene = document.querySelector(".emblem-scene");
         const marketGrid = document.getElementById("marketGrid");
         const marketUpdatedAt = document.getElementById("marketUpdatedAt");
+        const marketSessionStatus = document.getElementById("marketSessionStatus");
         const noticesList = document.getElementById("noticesList");
         const activitiesList = document.getElementById("activitiesList");
         const soundToggle = document.getElementById("soundToggle");
-        const soundStorageKey = "theHuntersSoundEnabled";
+        const soundStorageKey = "soundEnabled";
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
         let tapAudioContext;
 
         function soundEnabled() {
-            return localStorage.getItem(soundStorageKey) !== "false";
+            const stored = localStorage.getItem(soundStorageKey) ?? localStorage.getItem("theHuntersSoundEnabled");
+            return stored !== "false";
         }
 
         function updateSoundToggle() {
@@ -1268,6 +1350,88 @@
             });
 
             updateSoundToggle();
+        }
+
+        function formatDuration(milliseconds) {
+            const totalMinutes = Math.max(0, Math.floor(milliseconds / 60000));
+            const days = Math.floor(totalMinutes / 1440);
+            const hours = Math.floor((totalMinutes % 1440) / 60);
+            const minutes = totalMinutes % 60;
+            if (days > 0) return `${days}일 ${hours}시간`;
+            if (hours > 0) return `${hours}시간 ${minutes}분`;
+            return `${minutes}분`;
+        }
+
+        function kstParts(date = new Date()) {
+            const kst = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+            return {
+                year: kst.getUTCFullYear(),
+                month: kst.getUTCMonth(),
+                date: kst.getUTCDate(),
+                day: kst.getUTCDay(),
+                hour: kst.getUTCHours(),
+                minute: kst.getUTCMinutes(),
+                time: kst.getUTCHours() * 60 + kst.getUTCMinutes(),
+            };
+        }
+
+        function kstToLocalTime(parts, minutes) {
+            const utc = Date.UTC(parts.year, parts.month, parts.date, 0, minutes - 9 * 60);
+            return new Date(utc);
+        }
+
+        function nextBusinessOpen(from = new Date()) {
+            const parts = kstParts(from);
+            let addDays = 0;
+            let targetDay = parts.day;
+
+            if (targetDay >= 1 && targetDay <= 5 && parts.time < 9 * 60) {
+                return kstToLocalTime(parts, 9 * 60);
+            }
+
+            do {
+                addDays += 1;
+                targetDay = (parts.day + addDays) % 7;
+            } while (targetDay === 0 || targetDay === 6);
+
+            const nextParts = {
+                ...parts,
+                date: parts.date + addDays,
+            };
+            return kstToLocalTime(nextParts, 9 * 60);
+        }
+
+        function updateMarketSession() {
+            if (!marketSessionStatus) return;
+            const now = new Date();
+            const parts = kstParts(now);
+            const weekday = parts.day >= 1 && parts.day <= 5;
+            const openMinutes = 9 * 60;
+            const closeMinutes = 15 * 60 + 30;
+            const isOpen = weekday && parts.time >= openMinutes && parts.time <= closeMinutes;
+            const label = marketSessionStatus.querySelector("span:last-child");
+
+            marketSessionStatus.classList.toggle("open", isOpen);
+            if (label) {
+                label.textContent = isOpen
+                    ? "MARKET OPEN"
+                    : `MARKET CLOSED · NEXT OPEN ${formatDuration(nextBusinessOpen(now) - now)}`;
+            }
+        }
+
+        function initLogoTilt() {
+            if (!emblemScene || reduceMotion.matches || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+            emblemScene.addEventListener("pointermove", (event) => {
+                const rect = emblemScene.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                emblemScene.style.transform = `rotateX(${(-y * 2).toFixed(2)}deg) rotateY(${(x * 2).toFixed(2)}deg)`;
+            });
+
+            emblemScene.addEventListener("pointerleave", () => {
+                emblemScene.style.transform = "";
+            });
         }
 
         function escapeHtml(value) {
@@ -1362,6 +1526,7 @@
                             <span>${escapeHtml(item.date || "")}</span>
                             ${item.pinned ? '<span class="cms-pin">PINNED</span>' : '<span></span>'}
                         </div>
+                        ${item.badge ? `<span class="cms-badge">${escapeHtml(item.badge)}</span>` : ""}
                         <h3>${escapeHtml(item.title || "제목 없음")}</h3>
                         <p>${escapeHtml(item.summary || "")}</p>
                     </${tag}>
@@ -1442,9 +1607,12 @@
         }
 
         getMarketSnapshot().then(renderMarketSnapshot).catch(renderMarketError);
+        updateMarketSession();
+        window.setInterval(updateMarketSession, 60000);
         loadSiteSettings();
         loadNoticeContent();
         initMicroInteractions();
+        initLogoTilt();
 
         // 데이터 조합 함수 (수정됨: 기수 입력 삭제, '기'만 표시)
         function generateSummary() {

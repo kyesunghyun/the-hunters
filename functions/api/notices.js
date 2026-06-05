@@ -25,6 +25,7 @@ function publicItems(items) {
       id: String(item.id || ""),
       title: String(item.title || ""),
       date: String(item.date || ""),
+      badge: String(item.badge || ""),
       summary: String(item.summary || ""),
       link: String(item.link || ""),
       pinned: Boolean(item.pinned),

@@ -88,6 +88,7 @@ function normalizeEntry(item, index) {
     id: String(item.id || crypto.randomUUID()),
     title: String(item.title || "").trim(),
     date: String(item.date || "").trim(),
+    badge: String(item.badge || "").trim(),
     summary: String(item.summary || "").trim(),
     link: String(item.link || "").trim(),
     pinned: Boolean(item.pinned),
