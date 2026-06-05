@@ -9,6 +9,7 @@
 - `/admin-secret.html`
 
 로그인은 Cloudflare Pages 환경변수 `ADMIN_PASSWORD`로 검증합니다. 비밀번호는 코드에 저장하지 않습니다.
+예를 들어 `ADMIN_PASSWORD` 값이 `12345`이면 관리자 로그인 비밀번호도 `12345`입니다.
 
 관리자에서 수정 가능한 항목:
 
