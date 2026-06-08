@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>시장정보 | THE HUNTERS</title>
     <meta name="description" content="THE HUNTERS의 시장 지표 참고 페이지입니다. 정보 제공 및 교육 목적으로 제공됩니다.">
+    <meta name="robots" content="index,follow">
+    <meta name="google-adsense-account" content="ca-pub-6405401536665357">
     <meta property="og:title" content="MARKET | THE HUNTERS">
     <meta property="og:description" content="시장 흐름을 교육 목적으로 살펴보는 THE HUNTERS MARKET 페이지입니다.">
     <meta property="og:image" content="/logo3.png">
+    <meta property="og:site_name" content="THE HUNTERS">
+    <link rel="canonical" href="https://thehunters.co.kr/market.html">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6405401536665357" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap" rel="stylesheet">
@@ -63,8 +68,9 @@
         </div>
         <div class="grid" id="marketGrid"><div class="status">시장 정보를 불러오는 중입니다.</div></div>
         <section class="ticker"><div class="ticker-label">THE HUNTERS Market Note</div><div class="ticker-window"><div class="ticker-track" id="tickerTrack"></div></div></section>
-        <div class="actions"><a class="btn primary" href="guide.html">안내사항 보기</a><a class="btn" href="contact.html">문의하기</a></div>
+        <div class="actions"><a class="btn primary" href="/contents/">콘텐츠 읽기</a><a class="btn" href="/disclaimer/">투자 고지 보기</a><a class="btn" href="/contact/">문의하기</a></div>
     </main>
+    <footer class="site-footer"><div><strong>THE HUNTERS</strong><p>시장 정보는 교육 목적의 참고 자료이며 투자 권유가 아닙니다.</p></div><div class="footer-links"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/disclaimer/">Disclaimer</a><a href="/contact/">Contact</a></div></footer>
     <script>
         const grid=document.getElementById("marketGrid"), updatedAt=document.getElementById("updatedAt"), session=document.getElementById("session"), tickerTrack=document.getElementById("tickerTrack");
         function escapeHtml(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
