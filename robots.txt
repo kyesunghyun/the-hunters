@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /qa.html
-Disallow: /admin-secret.html
-Disallow: /api/qa
-Disallow: /api/admin
-Sitemap: https://thehunters.co.kr/sitemap.xml
-
